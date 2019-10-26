@@ -149,14 +149,6 @@ The image below shows the datailed flow of button operation when integrated into
 |**listDocumentsCallback** |Callback executed to return all users documents available                                                                  |Optional|
 |**onAuthenticated**       |Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
 
-#### Opening the editor via Function
-|Function               |Description                                                                                                                |
-|-----------------------|----------------------------------------------|
-|**openDocument**       | Opens the document previously created by user|
-|**openFromTemplate**   | Creates the document from a template         |
-|**openFromFormat**     | Creates the document from a pages format     |
-
-
 #### Callbacks return the following data structures:
 
 ##### Templates (listTemplatesCallback)
@@ -367,21 +359,30 @@ The image below shows the datailed flow of button operation when integrated into
 
 There are 3 ways to create and edit documents with the editor. For each of them, different button assignments are used:
 
-### Creating from page format
+### Creating using the JS Function
+|Function               |Description                                                                                                                |
+|-----------------------|----------------------------------------------|
+|**openDocument**       | Opens the document previously created by user|
+|**openFromTemplate**   | Creates the document from a template         |
+|**openFromFormat**     | Creates the document from a pages format     |
+
+### Using the button
+
+#### Creating from page format
 ```
     <button class="<Your Button Class Name>" data-formatid="<Your Format Id>"> 
         Your button title 
     </button>
 ```
 
-### Creating from template
+#### Creating from template
 ```
     <button class="<Your Button Class Name>" data-templateid="<Your Template Id>"> 
         Your button title 
     </button>
 ```
 
-**c. Editing a document from user**
+#### Editing a document from user**
 ```
     <button class="<Your Button Class Name>" data-documentid="<Your Template Id>"> 
         Your button title 
