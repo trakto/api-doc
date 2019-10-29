@@ -114,17 +114,17 @@ The image below shows the datailed flow of button operation when integrated into
                 customLoaderImageUrl: '<Loader image URL>',
                 customLoaderColor: '<Hexadecimal Loader color>',
                 customLoaderBgColor: '<Hexadecimal Background Loader Color>',
-                onAuthenticated: traktoEditor => {
-                    if (traktoEditor) {
-                        traktoEditor.openDocument('<Document ID>', data => console.log('closed editor'));
-                        traktoEditor.openFromTemplate('<Template ID>', data => console.log('closed editor'));
-                        traktoEditor.openFromFormat('<Format ID>', data => console.log('closed editor'));
-                    }
-                },
-                defaultCallback: data => {  },
                 listFormatsCallback: (data) => { },
                 listTemplatesCallback: (data) => { },
-                listDocumentsCallback: (data) => { }
+                listDocumentsCallback: (data) => { },
+                onAuthenticated: traktoEditor => {
+                    if (traktoEditor) {
+                        traktoEditor.openBlank(data => console.log('Callback - closed editor'),  {backgroundImage: '', width: 1, height: 1 });
+                        traktoEditor.openFromTemplate('<Template ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1 });
+                        traktoEditor.openFromFormat('<Format ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1 });
+                        traktoEditor.openDocument('<Document ID>', data => console.log('Callback - closed editor'));
+                    }
+                }
             });
         })();
     };
@@ -360,12 +360,21 @@ The image below shows the datailed flow of button operation when integrated into
 There are 3 ways to create and edit documents with the editor. For each of them, different button assignments are used:
 
 ### Using the JS Function
-|Function               |Description                                                                                                                |
-|-----------------------|----------------------------------------------|
-|**openDocument**       | Opens the document previously created by user|
-|**openFromTemplate**   | Creates the document from a template         |
-|**openFromFormat**     | Creates the document from a pages format     |
+|Function               |Description                                    
+|-----------------------|-----------------------------------------------|
+|**openDocument**       | Opens the document previously created by user |
+|**openFromTemplate**   | Creates the document from a template          |
+|**openFromFormat**     | Creates the document from a pages format      |
+|**openBlank**          | Create a new document from a custom size      |
 
+#### Atributes
+
+|Function               |Description                                                                            | Required |                                     
+|-----------------------|---------------------------------------------------------------------------------------|----------|
+|**backgroundImage**    | Image url that can be used in the art background. Empty if you do not want to include.| Required |
+|**Width**              | Page's Width                                                                          | Required |
+|**height**             | Page's Height                                                                         | Required |
+|**data**               | Response from Trakto's editor                                                         | Required |
 ### Using the button
 
 #### Creating from page format
