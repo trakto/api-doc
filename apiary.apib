@@ -40,10 +40,11 @@ When you're testing`localhost`, the Trakto Button® and Sdk® is avaliable only 
 # URLs Source
 
 ## Live mode
-| Tool  | URL                                        |
-|-------|--------------------------------------------|
-|**Sdk**| https://sdk.trakto.io/trakto-editor.min.js |
-|**API**| https://main.trakto.io/docsApi/api/v1/             |
+| Tool  | URL                                                 | Mode | 
+|-------|-----------------------------------------------------|------|
+|**Sdk**| https://sdk.trakto.io/trakto-editor.min.js          | Live |
+|**Sdk**| https://sdk-review.web.app/trakto-editor.min.js     | Beta |
+|**API**| https://main.trakto.io/docsApi/api/v1/              | Live |
 
 ## Test mode
 | Tool  | URL                                        |
@@ -91,10 +92,12 @@ The image below shows the datailed flow of button operation when integrated into
                 customLoaderImageUrl: '<Loader image URL>',
                 customLoaderColor: '<Hexadecimal Loader color>',
                 customLoaderBgColor: '<Hexadecimal Background Loader Color>',
+                allowNewPages: true, 
                 defaultCallback: data => {  },
                 listFormatsCallback: (data) => { },
                 listTemplatesCallback: (data) => { },
-                listDocumentsCallback: (data) => { }
+                listDocumentsCallback: (data) => { },
+                onClose: () => { }
             });
         })();
     };
@@ -114,23 +117,33 @@ The image below shows the datailed flow of button operation when integrated into
                 customLoaderImageUrl: '<Loader image URL>',
                 customLoaderColor: '<Hexadecimal Loader color>',
                 customLoaderBgColor: '<Hexadecimal Background Loader Color>',
+                allowNewPages: true,
                 listFormatsCallback: (data) => { },
                 listTemplatesCallback: (data) => { },
                 listDocumentsCallback: (data) => { },
                 onAuthenticated: traktoEditor => {
                     if (traktoEditor) {
-                        traktoEditor.openBlank(data => console.log('Callback - closed editor'),  {backgroundImage: '', width: 1, height: 1 });
-                        traktoEditor.openFromTemplate('<Template ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1 });
-                        traktoEditor.openFromFormat('<Format ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1 });
-                        traktoEditor.openDocument('<Document ID>', data => console.log('Callback - closed editor'));
+                        traktoEditor.openBlank(data => console.log('Callback - closed editor'),  {backgroundImage: '', width: 1, height: 1, exportResolution: ['low', 'medium', 'high'] });
+                        traktoEditor.openFromFormat('<Format ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['low', 'medium', 'high'] });
+                        traktoEditor.openFromTemplate('<Template ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['low', 'medium', 'thumbnail']});
+                        traktoEditor.openDocument('<Document ID>', data => {console.log('Callback - closed editor')});
                     }
-                }
+                },
+                onClose: () => { }
             });
         })();
     };
 </script>
 ```
 
+### Resolution types
+O atributo `exportResolution` resolução determina a qualidade em que o documento será exportado pelo Trakto Editor.
+
+| Type         | Description                             |
+|--------------|-----------------------------------------|
+| `low`        | 50% of original image size and quality  |
+| `medium`     | Original image size and quality         |
+| `high`       | 300% of original image size and quality |
 
 ### Using the button
 
@@ -148,6 +161,7 @@ The image below shows the datailed flow of button operation when integrated into
 |**listTemplatesCallback** |Callback executed to return all available templates to your editor                                                         |Optional|
 |**listDocumentsCallback** |Callback executed to return all users documents available                                                                  |Optional|
 |**onAuthenticated**       |Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
+|**onClose**               |Triggered when close button is executed                                                                                    |Optional|
 
 #### Callbacks return the following data structures:
 
@@ -176,13 +190,32 @@ The image below shows the datailed flow of button operation when integrated into
                 "high": "https://xyz.trakto.io/zxcvb.png",
                 "raw": "https://xyz.trakto.io/asdfg.png"
             },
-            "thumbs": {
-                "regular": "https://xyz.trakto.io/abcd.png",
-                "low": "https://xyz.trakto.io/1234.png",
-                "medium": "https://xyz.trakto.io/qwerty.png",
-                "high": "https://xyz.trakto.io/zxcvb.png",
-                "raw": "https://xyz.trakto.io/asdfg.png"
-            },
+            "thumbs": [
+                "low":{
+                    "bytes": 12345,
+                    "dimensions":{
+                        "height": 12345,
+                        "width": 12345
+                    },
+                    "url": "https://xyz.trakto.io/abcd.png"
+                },
+                "medium":{
+                    "bytes": 12345,
+                    "dimensions":{
+                        "height": 12345,
+                        "width": 12345
+                    },
+                    "url": "https://xyz.trakto.io/abcd.png"
+                },
+                "high":{
+                    "bytes": 12345,
+                    "dimensions":{
+                        "height": 12345,
+                        "width": 12345
+                    },
+                    "url": "https://xyz.trakto.io/abcd.png"
+                }                
+            ],
             "created_at": "2019-05-10T12:41:24.018Z",
             "updated_at": "2019-05-10T12:41:24.018Z"
         }
@@ -264,6 +297,11 @@ The image below shows the datailed flow of button operation when integrated into
                             "page_index": 0,
                             "page_format_id": "stehrsxvgm"
                             "thumb":{
+                            "dimensions":{
+                                "height": 12345,
+                                "width": 12345
+                            },
+                            "edited": false,
                                 "regular": "https://xyz.trakto.io/abcd.png",
                                 "low": "https://xyz.trakto.io/1234.png",
                                 "medium": "https://xyz.trakto.io/qwerty.png",
@@ -274,13 +312,32 @@ The image below shows the datailed flow of button operation when integrated into
                         {   
                             "page_index": 1,
                             "page_format_id": "ldecjyiuqm",
-                            "thumb":{
-                                "regular": "https://xyz.trakto.io/abcd.png",
-                                "low": "https://xyz.trakto.io/1234.png",
-                                "medium": "https://xyz.trakto.io/qwerty.png",
-                                "high": "https://xyz.trakto.io/zxcvb.png",
-                                "raw": "https://xyz.trakto.io/asdfg.png"
-                            }
+                            "thumbs": [
+                                "low":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
+                                "medium":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
+                                "high":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                }                
+                            ]
                         }
                 }
             ]
@@ -317,24 +374,62 @@ The image below shows the datailed flow of button operation when integrated into
                         {
                             "page_index": 0,
                             "page_format_id": "stehrsxvgm"
-                            "thumb":{
-                                "regular": "https://xyz.trakto.io/abcd.png",
-                                "low": "https://xyz.trakto.io/1234.png",
-                                "medium": "https://xyz.trakto.io/qwerty.png",
-                                "high": "https://xyz.trakto.io/zxcvb.png",
-                                "raw": "https://xyz.trakto.io/asdfg.png"
-                            }
+                            "thumbs": [
+                                "low":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
+                                "medium":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
+                                "high":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                }                
+                            ],
                         },
                         {   
                             "page_index": 1,
                             "page_format_id": "ldecjyiuqm",
-                            "thumb":{
-                                "regular": "https://xyz.trakto.io/abcd.png",
-                                "low": "https://xyz.trakto.io/1234.png",
-                                "medium": "https://xyz.trakto.io/qwerty.png",
-                                "high": "https://xyz.trakto.io/zxcvb.png",
-                                "raw": "https://xyz.trakto.io/asdfg.png"
-                            }
+                            "thumbs": [
+                                "low":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
+                                "medium":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
+                                "high":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                }                
+                            ],
                         }
                 }
             ]
@@ -444,6 +539,11 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
                 "title": "Lorem Ipsum",
                 "printable": false,
                 "thumb": {
+                    "dimensions":{
+                        "height": 12345,
+                        "width": 12345
+                    },
+                    "edited": false,
                     "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
@@ -501,6 +601,11 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
                 "title": "Lorem Ipsum",
                 "printable": false,
                 "thumb": {
+                    "dimensions":{
+                        "height": 12345,
+                        "width": 12345
+                    },
+                    "edited": false,
                     "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
@@ -716,6 +821,29 @@ Creates a new copy of a user's document.
                         "page_format_id": "stehrsxvgm"
                     }
                 ]
+        }
+        
+## Delete a document [/documents/{document_id}]
+
+
+### Request [DELETE]
+
++ Parameters
+    + document_id (required, string, `1lKM6m5gpL9Z9ZiV`) ... Document's ID
+
++ Request 
+
+    + Headers 
+
+                Content-Type: application/json
+                API-Secret: 59YvyzoCi0IMS7xybbRG
+                User-Token: 0IMS7xybbRG
+                Origin: 59YvyzoCi0IMS7xybbRG
+                
++ Response 200 (application/json)
+
+        {
+            true
         }
 
 
