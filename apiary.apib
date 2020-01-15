@@ -107,7 +107,7 @@ The image below shows the datailed flow of button operation when integrated into
 ## Starting via JS Function
 
 ```JS
- <script>
+<script>
     window.onload = () => {
         (function() {
             TraktoEditor.init({
@@ -118,21 +118,42 @@ The image below shows the datailed flow of button operation when integrated into
                 customLoaderColor: '<Hexadecimal Loader color>',
                 customLoaderBgColor: '<Hexadecimal Background Loader Color>',
                 allowNewPages: true,
-                listFormatsCallback: (data) => { },
-                listTemplatesCallback: (data) => { },
-                listDocumentsCallback: (data) => { },
+                listFormatsCallback: (data) => {},
+                listTemplatesCallback: (data) => {},
+                listDocumentsCallback: (data) => {},
                 onAuthenticated: traktoEditor => {
                     if (traktoEditor) {
-                        traktoEditor.openBlank(data => console.log('Callback - closed editor'),  { backgroundImage: '', width: 1, height: 1, exportResolution: ['thumbnail', 'low', 'medium', 'high'] });
-                        traktoEditor.openFromFormat('<Format ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['thumbnail', 'low', 'medium', 'high']} );
-                        traktoEditor.openFromTemplate('<Template ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['thumbnail', 'low', 'medium', 'thumbnail']} );
-                        traktoEditor.openDocument('<Document ID>', data => {console.log('Callback - closed editor')});
+                        traktoEditor.openBlank(data => console.log('Callback - closed editor'), {
+                            backgroundImage: '',
+                            width: 1,
+                            height: 1,
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                        });
+                        traktoEditor.openFromFormat('<Format ID>', data => {
+                            console.log('Callback - closed editor')
+                        }, {
+                            backgroundImage: '',
+                            width: 1,
+                            height: 1,
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                        });
+                        traktoEditor.openFromTemplate('<Template ID>', data => {
+                            console.log('Callback - closed editor')
+                        }, {
+                            backgroundImage: '',
+                            width: 1,
+                            height: 1,
+                            exportResolution: ['thumbnail', 'low', 'medium', 'thumbnail']
+                        });
+                        traktoEditor.openDocument('<Document ID>', data => {
+                            console.log('Callback - closed editor')
+                        });
                     }
                 },
-                onClose: () => { }
+                onClose: () => {}
             });
         })();
-    };
+    }; 
 </script>
 ```
 
