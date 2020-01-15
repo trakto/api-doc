@@ -123,33 +123,36 @@ The image below shows the datailed flow of button operation when integrated into
                 listDocumentsCallback: (data) => {},
                 onAuthenticated: traktoEditor => {
                     if (traktoEditor) {
+                        
                         traktoEditor.openBlank(data => console.log('Callback - closed editor'), {
                             backgroundImage: '',
                             width: 1,
                             height: 1,
                             exportResolution: ['thumbnail', 'low', 'medium', 'high']
                         });
-                        traktoEditor.openFromFormat('<Format ID>', data => {
-                            console.log('Callback - closed editor')
-                        }, {
+                        
+                        traktoEditor.openFromFormat('<Format ID>', data => { console.log('Callback - closed editor') }, 
+                        {
                             backgroundImage: '',
                             width: 1,
                             height: 1,
                             exportResolution: ['thumbnail', 'low', 'medium', 'high']
                         });
-                        traktoEditor.openFromTemplate('<Template ID>', data => {
-                            console.log('Callback - closed editor')
-                        }, {
+                        
+                        traktoEditor.openFromTemplate('<Template ID>', data => { console.log('Callback - closed editor') }, 
+                        {
                             backgroundImage: '',
                             width: 1,
                             height: 1,
                             exportResolution: ['thumbnail', 'low', 'medium', 'thumbnail']
                         });
+                        
                         traktoEditor.openDocument('<Document ID>', data => {
                             console.log('Callback - closed editor')
                         });
                     }
                 },
+                
                 onClose: () => {}
             });
         })();
@@ -206,7 +209,7 @@ There are 2 ways to create and edit documents with the editor using Trakto Butto
 |**data**               | Response from Trakto's editor                                                         | Required |
 
 #### Resolution types
-O atributo `exportResolution` resolução determina a qualidade em que o documento será exportado pelo Trakto Editor.
+The `exportResolution` resolution attribute define the quality at which the document will be exported by Trakto Editor.
 
 | Type             | Description                             |
 |------------------|-----------------------------------------|
