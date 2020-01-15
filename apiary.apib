@@ -88,15 +88,16 @@ The image below shows the datailed flow of button operation when integrated into
                 apiSecret: '<Your Api Key>',
                 productKey: '<Your Product Key>',
                 userEmail: 'user@email.com',
-                buttonClassName: 'trakto-button', 
                 customLoaderImageUrl: '<Loader image URL>',
                 customLoaderColor: '<Hexadecimal Loader color>',
                 customLoaderBgColor: '<Hexadecimal Background Loader Color>',
-                allowNewPages: true, 
-                defaultCallback: data => {  },
-                listFormatsCallback: (data) => { },
-                listTemplatesCallback: (data) => { },
-                listDocumentsCallback: (data) => { },
+                fullScreen: true,
+                closeButtonClass: 'your-class-here',
+                closeButton: `<img src='https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png'/>`,
+                allowNewPages: true,
+                listFormatsCallback: (data) => {},
+                listTemplatesCallback: (data) => {},
+                listDocumentsCallback: (data) => {},
                 onClose: () => { }
             });
         })();
