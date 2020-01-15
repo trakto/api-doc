@@ -171,14 +171,15 @@ The image below shows the datailed flow of button operation when integrated into
 
 # 6) Customize the editor
 
-| Attribute                |Type     | Description
-|---                       |---      | ---
-| **customLoaderImageUrl** | String  | Loader image link used during editor opening.
-| **customLoaderColor**    | String  | Hexadecimal Loader color used during editor opening.
-| **fullscreen**           | Boolean | Last date that template was updated.
-| **allowNewPages**        | Boolean | Defines whether the user can create new pages for the document.
-| **closeButtonClass**     | String  | CSS Class for modal close button.
-| **closeButton**          | String  | The close the modal button, with the possibility of plain text or html.
+| Attribute                |Type     | Required | Description
+|---                       |---      |----      | ---
+| **customLoaderImageUrl** | String  | No       | ELoader image link used during editor opening.
+| **customLoaderColor**    | String  | No       | Hexadecimal Loader color used during editor opening.
+| **customLoaderBgColor**  | String  | No       | Hexadecimal Loader background color used during editor opening.
+| **fullscreen**           | Boolean | No       | Last date that template was updated.
+| **allowNewPages**        | Boolean | No       | Defines whether the user can create new pages for the document.
+| **closeButtonClass**     | String  | No       | CSS Class for modal close button.
+| **closeButton**          | String  | No       | The close the modal button, with the possibility of plain text or html.
 
 # 7) Creating or editing a document via Trakto Button®
 
@@ -212,22 +213,22 @@ There are 2 ways to create and edit documents with the editor using Trakto Butto
 
 
 ## Using the JS Function
-|Function               |Description                                    
-|-----------------------|------------------------------------------------|
-|**deleteDocument**     | Delete the document previously created by user |
-|**openDocument**       | Opens the document previously created by user  |
-|**openFromTemplate**   | Creates the document from a template           |
-|**openFromFormat**     | Creates the document from a pages format       |
-|**openBlank**          | Create a new document from a custom size       |
+|Function               | Required | Description                                    
+|-----------------------|----------|------------------------------------------------|
+|**deleteDocument**     | No       | Delete the document previously created by user |
+|**openDocument**       | No       | Opens the document previously created by user  |
+|**openFromTemplate**   | No       | Creates the document from a template           |
+|**openFromFormat**     | No       | Creates the document from a pages format       |
+|**openBlank**          | No       | Create a new document from a custom size       |
 
 #### Atributes
 
-|Function               |Description                                                                            | Required |                                     
-|-----------------------|---------------------------------------------------------------------------------------|----------|
-|**backgroundImage**    | Image url that can be used in the art background. Empty if you do not want to include.| Required |
-|**Width**              | Page's Width                                                                          | Required |
-|**height**             | Page's Height                                                                         | Required |
-|**data**               | Response from Trakto's editor                                                         | Required |
+|Function               | Required | Description                                                                            | Required |                                     
+|-----------------------|----------|----------------------------------------------------------------------------------------|----------|
+|**backgroundImage**    | No       | Image url that can be used in the art background. Empty if you do not want to include.| Required |
+|**Width**              | No       | Page's Width                                                                          | Required |
+|**height**             | No       | Page's Height                                                                         | Required |
+|**data**               | -        | Response from Trakto's editor                                                         | Required |
 
 #### Resolution types
 The `exportResolution` resolution attribute define the quality at which the document will be exported by Trakto Editor.
@@ -242,15 +243,15 @@ The `exportResolution` resolution attribute define the quality at which the docu
 
 ## About Trakto Button® callbacks
 
-|Fields                    |Description                                                                                                                |Required|
+|Fields                    | Description                                                                                                                |Required|
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------|--------|
-|**buttonClassName**       |Used to stylize the look of the button according to its application                                                        |Required|
-|**defaultCallback**       |Callback executed after document completion in Trakto Editor. Returns the address of the images for the finished document. |Required|
-|**listFormatsCallback**   |Callback executed to return all available page formats to your editor.                                                     |Optional|
-|**listTemplatesCallback** |Callback executed to return all available templates to your editor                                                         |Optional|
-|**listDocumentsCallback** |Callback executed to return all users documents available                                                                  |Optional|
-|**onAuthenticated**       |Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
-|**onClose**               |Triggered when close button is executed                                                                                    |Optional|
+|**buttonClassName**       | Used to stylize the look of the button according to its application                                                        |Required|
+|**defaultCallback**       | Callback executed after document completion in Trakto Editor. Returns the address of the images for the finished document. |Required|
+|**listFormatsCallback**   | Callback executed to return all available page formats to your editor.                                                     |Optional|
+|**listTemplatesCallback** | Callback executed to return all available templates to your editor                                                         |Optional|
+|**listDocumentsCallback** | Callback executed to return all users documents available                                                                  |Optional|
+|**onAuthenticated**       | Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
+|**onClose**               | Triggered when close button is executed                                                                                    |Optional|
 
 ### Callbacks return the following data structures:
 
@@ -440,8 +441,9 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**user_id**        | String    | User's id. This field is unique
 |**document_id**    | String    | Document's id. This field is unique
 |**created_at**     | Date      | Date the document was created.
+|**edited**         | String    | Identifies if the document has been changed
 |**thumb**          | Object    | Image of the first page of the Template that was created by the user.
-|**regular**        | String    | Thumb with regular quality.
+|**thumbnail**      | String    | Thumb with thumbnail quality.
 |**low**            | String    | Thumb with regular low.
 |**medium**         | String    | Thumb with regular medium.
 |**height**         | String    | Thumb with regular high.
@@ -458,12 +460,21 @@ The `exportResolution` resolution attribute define the quality at which the docu
             "document_id": "daOOI88dbbRG",
             "created_at": "2019-07-11T12:18:33.179Z", 
             "updated_at": "2019-07-11T12:18:33.179Z",
+            "edited": true,
             "pages":[
                     {   
                         {
                             "page_index": 0,
                             "page_format_id": "stehrsxvgm"
                             "thumbs": [
+                                "thumbnail":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
                                 "low":{
                                     "bytes": 12345,
                                     "dimensions":{
@@ -494,6 +505,14 @@ The `exportResolution` resolution attribute define the quality at which the docu
                             "page_index": 1,
                             "page_format_id": "ldecjyiuqm",
                             "thumbs": [
+                                "thumbnail":{
+                                    "bytes": 12345,
+                                    "dimensions":{
+                                        "height": 12345,
+                                        "width": 12345
+                                    },
+                                    "url": "https://xyz.trakto.io/abcd.png"
+                                },
                                 "low":{
                                     "bytes": 12345,
                                     "dimensions":{
@@ -787,6 +806,7 @@ This endpoint list all formats that can used for create a empty document.
 |**updated_at**     | String    | Last date that document was updated.
 |**deleted_at**     | String    | Document's deleted date document.
 |**title**          | String    | Title defined by user.
+|**edited**         | String    | Identifies if the document has been changed
 |**Thumb**          | Object    | Image of the first page of the document that was created by the user.
 |**regular**        | String    | Thumb with regular quality.
 |**low**            | String    | Thumb with regular low.
@@ -818,6 +838,7 @@ This endpoint list all formats that can used for create a empty document.
                 "updated_at": "2019-07-11T12:18:33.179Z",
                 "title": "Lorem Ipsum",
                 "printable": false,
+                "edited": true,
                 "thumb": {
                     "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
