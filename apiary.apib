@@ -5,7 +5,7 @@ HOST: https://main.trakto.io/docsApi/api/v1
 
 <img src="https://trakto.design/img/editor/01.Trakto.png" width=100%>
 
-# Concepts
+# 1) Concepts
 
 | Term              | What's is this 
 |---                |--- 
@@ -15,7 +15,7 @@ HOST: https://main.trakto.io/docsApi/api/v1
 |**Formats**        | Are descriptions of pages that are used to create new documents or arts through the editor.
 |**Documents**      | They are materials created through the editor, for example the arts for social networks.
 
-# Requirements
+# 2) Requirements
 
 To use, the API requires:
 
@@ -24,7 +24,9 @@ To use, the API requires:
 3. **User Token**: User Id available via API and Trakto Button®;
 4. **Origin**: Allowed URL for API usage.
 
-## Running on localhost mode
+# 3) URL source
+
+## Localhost mode
 
 When you're testing`localhost`, the Trakto Button® and Sdk® is avaliable only on ports:
 
@@ -36,8 +38,6 @@ When you're testing`localhost`, the Trakto Button® and Sdk® is avaliable only 
 |http://localhost:5000|
 |http://localhost:8000|
 |http://localhost:8080|
-
-# URLs Source
 
 ## Live mode
 | Tool  | URL                                                 | Mode | 
@@ -52,12 +52,12 @@ When you're testing`localhost`, the Trakto Button® and Sdk® is avaliable only 
 |**Sdk**| Coming Soon                                |
 |**API**| Coming Soon                                |
 
-# Samples
+# 4) Examples
 
-1. See our sample project in **Github**: https://github.com/trakto/trakto-sdk-sample
+1. See our example project in **Github**: https://github.com/trakto/trakto-sdk-sample
 2. See the button in **action**: https://sdk-sample-page.web.app/
 
-# Trakto Button®
+# 5) Getting Started with Trakto Button®
 
 The Trakto Button® allows the Trakto editor to be used within your application.
 
@@ -65,20 +65,20 @@ The editor is made available according to the look of your website and with tota
 
 **[Watch the video of the button in operation](https://cdn-std.dprcdn.net/files/acc_632271/NuzGtr)**
 
-# Step by step for use the Trakto Button®
+## Understanding the boot flow
 
 The image below shows the datailed flow of button operation when integrated into your platform.
 
 <img src="https://camo.githubusercontent.com/ed2ff0031816864a53ef013e9e5fde4b6c9f15c2/68747470733a2f2f666972656261736573746f726167652e676f6f676c65617069732e636f6d2f76302f622f7472616b746f2d6465762e61707073706f742e636f6d2f6f2f6465765f6173736574732532465472616b746f253230427574746f6e25323053444b2e6a70673f616c743d6d6564696126746f6b656e3d38313463663264622d333237352d346564662d396635392d313830653464363462383061" width=100%>
 
 
-## Import the sdk
+## Getting the sdk
 
 ```
     <script src="https://sdk.trakto.io/trakto-editor.min.js"></script>
 ```
 
-## Initialize the sdk and starting the editor via Button
+## Starting via Tag Button
 
 ```js 
  <script>
@@ -104,7 +104,7 @@ The image below shows the datailed flow of button operation when integrated into
 </script>
 ```
 
-## Initialize the sdk and starting the editor via JS
+## Starting via JS Function
 
 ```JS
  <script>
@@ -123,9 +123,9 @@ The image below shows the datailed flow of button operation when integrated into
                 listDocumentsCallback: (data) => { },
                 onAuthenticated: traktoEditor => {
                     if (traktoEditor) {
-                        traktoEditor.openBlank(data => console.log('Callback - closed editor'),  {backgroundImage: '', width: 1, height: 1, exportResolution: ['low', 'medium', 'high'] });
-                        traktoEditor.openFromFormat('<Format ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['low', 'medium', 'high'] });
-                        traktoEditor.openFromTemplate('<Template ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['low', 'medium', 'thumbnail']});
+                        traktoEditor.openBlank(data => console.log('Callback - closed editor'),  { backgroundImage: '', width: 1, height: 1, exportResolution: ['thumbnail', 'low', 'medium', 'high'] });
+                        traktoEditor.openFromFormat('<Format ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['thumbnail', 'low', 'medium', 'high']} );
+                        traktoEditor.openFromTemplate('<Template ID>', data => {console.log('Callback - closed editor')}, {backgroundImage: '', width: 1, height: 1,  exportResolution: ['thumbnail', 'low', 'medium', 'thumbnail']} );
                         traktoEditor.openDocument('<Document ID>', data => {console.log('Callback - closed editor')});
                     }
                 },
@@ -136,22 +136,66 @@ The image below shows the datailed flow of button operation when integrated into
 </script>
 ```
 
-### Resolution types
+# 6) Creating or editing a document via Trakto Button®
+
+There are 2 ways to create and edit documents with the editor using Trakto Button®. For each of them, different button assignments are used:
+
+- Button Tags;
+- JS Functions.
+
+## Using the button
+
+### Creating from page format
+```
+    <button class="<Your Button Class Name>" data-formatid="<Your Format Id>"> 
+        Your button title 
+    </button>
+```
+
+### Creating from template
+```
+    <button class="<Your Button Class Name>" data-templateid="<Your Template Id>"> 
+        Your button title 
+    </button>
+```
+
+### Editing a user's document
+```
+    <button class="<Your Button Class Name>" data-documentid="<Your Template Id>"> 
+        Your button title 
+    </button>
+```
+
+
+## Using the JS Function
+|Function               |Description                                    
+|-----------------------|-----------------------------------------------|
+|**openDocument**       | Opens the document previously created by user |
+|**openFromTemplate**   | Creates the document from a template          |
+|**openFromFormat**     | Creates the document from a pages format      |
+|**openBlank**          | Create a new document from a custom size      |
+
+#### Atributes
+
+|Function               |Description                                                                            | Required |                                     
+|-----------------------|---------------------------------------------------------------------------------------|----------|
+|**backgroundImage**    | Image url that can be used in the art background. Empty if you do not want to include.| Required |
+|**Width**              | Page's Width                                                                          | Required |
+|**height**             | Page's Height                                                                         | Required |
+|**data**               | Response from Trakto's editor                                                         | Required |
+
+#### Resolution types
 O atributo `exportResolution` resolução determina a qualidade em que o documento será exportado pelo Trakto Editor.
 
-| Type         | Description                             |
-|--------------|-----------------------------------------|
-| `low`        | 50% of original image size and quality  |
-| `medium`     | Original image size and quality         |
-| `high`       | 300% of original image size and quality |
-
-### Using the button
-
-**Note:** 
-> Trakto takes care of the entire process of authenticating its users with editor.
+| Type             | Description                             |
+|------------------|-----------------------------------------|
+| **thumbnail**    | 30% of original image size and quality  |
+| **low**          | 50% of original image size and quality  |
+| **medium**       | Original image size and quality         |
+| **high**         | 300% of original image size and quality |
 
 
-### About callbacks
+## About Trakto Button® callbacks
 
 |Fields                    |Description                                                                                                                |Required|
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------|--------|
@@ -163,7 +207,7 @@ O atributo `exportResolution` resolução determina a qualidade em que o documen
 |**onAuthenticated**       |Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
 |**onClose**               |Triggered when close button is executed                                                                                    |Optional|
 
-#### Callbacks return the following data structures:
+### Callbacks return the following data structures:
 
 ##### Templates (listTemplatesCallback)
 
@@ -450,50 +494,7 @@ O atributo `exportResolution` resolução determina a qualidade em que o documen
 |**page_index**     | Number    | Represents the index (order number) of the page in the document.
 |**page_format_id** | String    | Page's format identifier.
 
-## Creating or editing a document
-
-There are 3 ways to create and edit documents with the editor. For each of them, different button assignments are used:
-
-### Using the JS Function
-|Function               |Description                                    
-|-----------------------|-----------------------------------------------|
-|**openDocument**       | Opens the document previously created by user |
-|**openFromTemplate**   | Creates the document from a template          |
-|**openFromFormat**     | Creates the document from a pages format      |
-|**openBlank**          | Create a new document from a custom size      |
-
-#### Atributes
-
-|Function               |Description                                                                            | Required |                                     
-|-----------------------|---------------------------------------------------------------------------------------|----------|
-|**backgroundImage**    | Image url that can be used in the art background. Empty if you do not want to include.| Required |
-|**Width**              | Page's Width                                                                          | Required |
-|**height**             | Page's Height                                                                         | Required |
-|**data**               | Response from Trakto's editor                                                         | Required |
-### Using the button
-
-#### Creating from page format
-```
-    <button class="<Your Button Class Name>" data-formatid="<Your Format Id>"> 
-        Your button title 
-    </button>
-```
-
-#### Creating from template
-```
-    <button class="<Your Button Class Name>" data-templateid="<Your Template Id>"> 
-        Your button title 
-    </button>
-```
-
-#### Editing a document from user**
-```
-    <button class="<Your Button Class Name>" data-documentid="<Your Template Id>"> 
-        Your button title 
-    </button>
-```
-
-# Using the Rest API
+# 7) Using the Rest API
 
 All the enpdoints are enabled just in user context. Thus, the informations that will be used refers only to a user connected to his custom editor created with Trakto®
 
@@ -525,6 +526,7 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
+                Product-Key: 3fak2krda
                 Origin: 59YvyzoCi0IMS7xybbRG
 
 + Response 200 (application/json)
@@ -584,7 +586,8 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
 
 + Parameters
     + template_id (required, string, `vbqaevoshnyuzss`) ... Template's ID
@@ -663,7 +666,8 @@ This endpoint list all formats that can used for create a empty document.
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
 
 + Response 200 (application/json)
 
@@ -700,7 +704,8 @@ This endpoint list all formats that can used for create a empty document.
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
 
 + Parameters
     + format_id (required, string, `vbqaevoshnyuzss`) ... Page's format ID
@@ -756,7 +761,8 @@ This endpoint list all formats that can used for create a empty document.
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
 
 + Response 200 (application/json)
 
@@ -804,6 +810,7 @@ Creates a new copy of a user's document.
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
+                Product-Key: 3fak2krda
                 Origin: 59YvyzoCi0IMS7xybbRG
                 
 + Response 200 (application/json)
@@ -838,7 +845,8 @@ Creates a new copy of a user's document.
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
                 
 + Response 200 (application/json)
 
@@ -859,7 +867,8 @@ Creates a new document for the user using the contents of a template
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
 
 + Parameters
     + template_id (required, string, `1lKM6m5gpL9Z9ZiV`) ... Template's ID
@@ -904,7 +913,8 @@ Creates a new document for the user using the contents of a template
                 Content-Type: application/json
                 API-Secret: 59YvyzoCi0IMS7xybbRG
                 User-Token: 0IMS7xybbRG
-                Origin: 59YvyzoCi0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: http://localhost:8080
 
 + Parameters
     + page_format_id (required, string, `1lKM6m5gpL9Z9ZiV`) ... Page format's ID
