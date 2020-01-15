@@ -117,6 +117,9 @@ The image below shows the datailed flow of button operation when integrated into
                 customLoaderImageUrl: '<Loader image URL>',
                 customLoaderColor: '<Hexadecimal Loader color>',
                 customLoaderBgColor: '<Hexadecimal Background Loader Color>',
+                fullscreen: true,
+                closeButtonClass: 'your-class-here',
+                closeButton: `<img src='https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png'/>`,
                 allowNewPages: true,
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
@@ -124,14 +127,18 @@ The image below shows the datailed flow of button operation when integrated into
                 onAuthenticated: traktoEditor => {
                     if (traktoEditor) {
                         
-                        traktoEditor.openBlank(data => console.log('Callback - closed editor'), {
+                        traktoEditor.deleteDocument('<Document ID>', data => { 
+                            console.log('Document Deleted', data);
+                        });
+                        
+                        traktoEditor.openBlank(data => console.log('openBlank finished'), {
                             backgroundImage: '',
                             width: 1,
                             height: 1,
                             exportResolution: ['thumbnail', 'low', 'medium', 'high']
                         });
                         
-                        traktoEditor.openFromFormat('<Format ID>', data => { console.log('Callback - closed editor') }, 
+                        traktoEditor.openFromFormat('<Format ID>', data => { console.log('openFromFormat finished'); }, 
                         {
                             backgroundImage: '',
                             width: 1,
@@ -139,7 +146,7 @@ The image below shows the datailed flow of button operation when integrated into
                             exportResolution: ['thumbnail', 'low', 'medium', 'high']
                         });
                         
-                        traktoEditor.openFromTemplate('<Template ID>', data => { console.log('Callback - closed editor') }, 
+                        traktoEditor.openFromTemplate('<Template ID>', data => { console.log('openFromTemplate finished'); }, 
                         {
                             backgroundImage: '',
                             width: 1,
@@ -148,19 +155,32 @@ The image below shows the datailed flow of button operation when integrated into
                         });
                         
                         traktoEditor.openDocument('<Document ID>', data => {
-                            console.log('Callback - closed editor')
+                            console.log('openDocument finished');
                         });
                     }
                 },
                 
-                onClose: () => {}
+                onClose: () => { 
+                    console.log('Closed'); 
+                }
             });
         })();
     }; 
 </script>
 ```
 
-# 6) Creating or editing a document via Trakto Button®
+# 6) Customize the editor
+
+| Attribute                |Type     | Description
+|---                       |---      | ---
+| **customLoaderImageUrl** | String  | Loader image link used during editor opening.
+| **customLoaderColor**    | String  | Hexadecimal Loader color used during editor opening.
+| **fullscreen**           | Boolean | Last date that template was updated.
+| **allowNewPages**        | Boolean | Defines whether the user can create new pages for the document.
+| **closeButtonClass**     | String  | Template deleted date.
+| **closeButton**          | String  | Template deleted date.
+
+# 7) Creating or editing a document via Trakto Button®
 
 There are 2 ways to create and edit documents with the editor using Trakto Button®. For each of them, different button assignments are used:
 
@@ -193,11 +213,12 @@ There are 2 ways to create and edit documents with the editor using Trakto Butto
 
 ## Using the JS Function
 |Function               |Description                                    
-|-----------------------|-----------------------------------------------|
-|**openDocument**       | Opens the document previously created by user |
-|**openFromTemplate**   | Creates the document from a template          |
-|**openFromFormat**     | Creates the document from a pages format      |
-|**openBlank**          | Create a new document from a custom size      |
+|-----------------------|------------------------------------------------|
+|**deleteDocument**     | Delete the document previously created by user |
+|**openDocument**       | Opens the document previously created by user  |
+|**openFromTemplate**   | Creates the document from a template           |
+|**openFromFormat**     | Creates the document from a pages format       |
+|**openBlank**          | Create a new document from a custom size       |
 
 #### Atributes
 
@@ -428,7 +449,7 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**page_format_id** | String    | Page's format identifier.
 
 
-#####DefaultCallback (defaultCallback)
+##### DefaultCallback (defaultCallback)
 
 ```JSON
     [
@@ -518,7 +539,7 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**page_index**     | Number    | Represents the index (order number) of the page in the document.
 |**page_format_id** | String    | Page's format identifier.
 
-# 7) Using the Rest API
+# 8) Using the Rest API
 
 All the enpdoints are enabled just in user context. Thus, the informations that will be used refers only to a user connected to his custom editor created with Trakto®
 
