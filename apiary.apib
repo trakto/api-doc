@@ -155,9 +155,10 @@ The image below shows the datailed flow of button operation when integrated into
                             exportResolution: ['thumbnail', 'low', 'medium', 'thumbnail']
                         });
                         
-                        traktoEditor.openDocument('<Document ID>', data => {
-                            console.log('openDocument finished');
-                        });
+                        traktoEditor.openDocument('<Document ID>', data => { console.log('openDocument finished');},
+                        {
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                        );
                     }
                 },
                 
@@ -224,11 +225,12 @@ There are 2 ways to create and edit documents with the editor using Trakto Butto
 
 #### Atributes
 
-|Function               | Required | Description                                                                            | Required |                                     
-|-----------------------|----------|----------------------------------------------------------------------------------------|----------|
+|Function               | Required | Description                                                                           | Required |                                     
+|-----------------------|----------|---------------------------------------------------------------------------------------|----------|
 |**backgroundImage**    | No       | Image url that can be used in the art background. Empty if you do not want to include.| Required |
 |**Width**              | No       | Page's Width                                                                          | Required |
 |**height**             | No       | Page's Height                                                                         | Required |
+|**exportResolution**   | Yes      | Export Resolution                                                                     | Required |
 |**data**               | -        | Response from Trakto's editor                                                         | Required |
 
 #### Resolution types
