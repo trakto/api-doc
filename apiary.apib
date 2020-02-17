@@ -271,11 +271,25 @@ The **exportResolution** resolution attribute define the quality at which the do
 |**theme_id**               | No       | String | listTemplates              |  Filter by thems's id                                                      |
 |**limit**                  | No       | Number | listFormats, listDocuments |  Number of items per page                                                  |
 
-### Using the TraktoEditor Functions
+### Using Functions
 
 **Important Notes:**
 1. **`If you don't want to use filters send an empty object like "{ }"`**
 2. **`TraktoEditor is a main instance and traktoEditor is a instance created from onAuthenticated`**
+
+**Example:**
+
+```
+           TraktoEditor.listTemplates(
+              { 
+                created_between_start: new Date(2010, 1, 1), 
+                created_between_end: new Date(2025, 6, 31) 
+              },
+              onSuccessLoadDocs,
+              '.page-content__pagination-next',
+              '.page-content__pagination-previous'
+            );
+```
 
 #### a. Implementation of the listDocuments
 
