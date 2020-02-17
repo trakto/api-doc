@@ -67,9 +67,16 @@ The editor is made available according to the look of your website and with tota
 
 ## Understanding the boot flow
 
+**There are 2 ways to create and edit documents with the editor using Trakto Button®. For each of them, different button assignments are used:**
+ - **HTML Button**
+ - **JS Functions**
+
 The image below shows the datailed flow of button operation when integrated into your platform.
 
 <img src="https://camo.githubusercontent.com/ed2ff0031816864a53ef013e9e5fde4b6c9f15c2/68747470733a2f2f666972656261736573746f726167652e676f6f676c65617069732e636f6d2f76302f622f7472616b746f2d6465762e61707073706f742e636f6d2f6f2f6465765f6173736574732532465472616b746f253230427574746f6e25323053444b2e6a70673f616c743d6d6564696126746f6b656e3d38313463663264622d333237352d346564662d396635392d313830653464363462383061" width=100%>
+
+</br>
+
 
 
 ## Getting the sdk
@@ -80,7 +87,7 @@ The image below shows the datailed flow of button operation when integrated into
 
 ## Starting via Tag Button
 
-```js 
+```javascript
  <script>
     window.onload = () => {
         (function() {
@@ -89,12 +96,13 @@ The image below shows the datailed flow of button operation when integrated into
                 productKey: '<Your Product Key>',
                 userEmail: 'user@email.com',
                 customLoaderImageUrl: '<Loader image URL>',
-                customLoaderColor: '<Hexadecimal Loader color>',
-                customLoaderBgColor: '<Hexadecimal Background Loader Color>',
+                customLoaderColor: '<Hex Loader color>',
+                customLoaderBgColor: '<Hex Background Loader Color>',
                 fullScreen: true,
                 closeButtonClass: 'your-class-here',
-                closeButton: `<img src='https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png'/>`,
+                closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
+                defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
                 listDocumentsCallback: (data) => {},
@@ -107,7 +115,7 @@ The image below shows the datailed flow of button operation when integrated into
 
 ## Starting via JS Function
 
-```JS
+```javascript
 <script>
     window.onload = () => {
         (function() {
@@ -116,12 +124,13 @@ The image below shows the datailed flow of button operation when integrated into
                 productKey: '<Your Product Key>',
                 userEmail: 'user@email.com',
                 customLoaderImageUrl: '<Loader image URL>',
-                customLoaderColor: '<Hexadecimal Loader color>',
-                customLoaderBgColor: '<Hexadecimal Background Loader Color>',
+                customLoaderColor: '<Hex Loader color>',
+                customLoaderBgColor: '<Hex Background Loader Color>',
                 fullScreen: true,
                 closeButtonClass: 'your-class-here',
-                closeButton: `<img src='https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-512.png'/>`,
+                closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
+                defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
                 listDocumentsCallback: (data) => {},
@@ -152,7 +161,7 @@ The image below shows the datailed flow of button operation when integrated into
                             backgroundImage: '',
                             width: 1,
                             height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'thumbnail']
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
                         });
                         
                         traktoEditor.openDocument('<Document ID>', data => { console.log('openDocument finished');},
@@ -182,15 +191,9 @@ The image below shows the datailed flow of button operation when integrated into
 | **allowNewPages**        | Boolean | No       | Defines whether the user can create new pages for the document.
 | **closeButtonClass**     | String  | No       | CSS Class for modal close button.
 | **closeButton**          | String  | No       | The close the modal button, with the possibility of plain text or html.
+| **standaloneMode**       | String  | No       | Defines whether the user instance is created in the startup sdk. True during startup, FALSE when some resource is used.
 
 # 7) Creating or editing a document via Trakto Button®
-
-There are 2 ways to create and edit documents with the editor using Trakto Button®. For each of them, different button assignments are used:
-
-- Button Tags;
-- JS Functions.
-
-## Using the button
 
 ### Creating from page format
 ```
@@ -214,7 +217,11 @@ There are 2 ways to create and edit documents with the editor using Trakto Butto
 ```
 
 
-## Using the JS Function
+# 8) Using the JS Function
+
+### Opening the editor
+
+#### Functions
 |Function               | Required | Description                                    
 |-----------------------|----------|------------------------------------------------|
 |**deleteDocument**     | No       | Delete the document previously created by user |
@@ -233,8 +240,29 @@ There are 2 ways to create and edit documents with the editor using Trakto Butto
 |**exportResolution**   | Yes      | Export Resolution                                                                     | Required |
 |**data**               | -        | Response from Trakto's editor                                                         | Required |
 
+
+### Managing thems, page formats, documents and templates 
+
+#### Functions
+|Function               | Description                                    | Supported params                                                      |
+|-----------------------|------------------------------------------------|-----------------------------------------------------------------------|
+|**listTemplates**      | List published templates                       | created_between_start & created_between_end, page_format_id, theme_id |
+|**listDocuments**      | List all documents previously created by user  | created_between_start & created_between_end, limit                    |
+|**listFormats**        | List all page formats                          | created_between_start & created_between_end, limit                    |
+|**listThemes**         | List all themes used on templates              | created_between_start & created_between_end                           |
+
+#### Attributes
+|Function                   | Type   | Supported functions      | Description                                                                |
+|---------------------------|--------|--------------------------|----------------------------------------------------------------------------|
+|**created_between_start**  | Date   | all                      |  Filters by initial date. Used in combination with "created_between_end"   |
+|**created_between_end**    | Date   | all                      |  Filters by initial date. Used in combination with "created_between_start" |
+|**page_format_id**         | String | listTemplates            |  Filter by page's format id                                                |
+|**theme_id**               | String | listTemplates            |  Filter by thems's id                                                      |
+|**limit**                  | String | listFormats, listFormats |  Number of items per page                                                  |
+
+
 #### Resolution types
-The `exportResolution` resolution attribute define the quality at which the document will be exported by Trakto Editor.
+The **exportResolution** resolution attribute define the quality at which the document will be exported by Trakto Editor.
 
 | Type             | Description                             |
 |------------------|-----------------------------------------|
@@ -244,7 +272,7 @@ The `exportResolution` resolution attribute define the quality at which the docu
 | **high**         | 300% of original image size and quality |
 
 
-## About Trakto Button® callbacks
+# 9) About Trakto Button® callbacks
 
 |Fields                    | Description                                                                                                                |Required|
 |--------------------------|---------------------------------------------------------------------------------------------------------------------------|--------|
@@ -253,10 +281,11 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**listFormatsCallback**   | Callback executed to return all available page formats to your editor.                                                     |Optional|
 |**listTemplatesCallback** | Callback executed to return all available templates to your editor                                                         |Optional|
 |**listDocumentsCallback** | Callback executed to return all users documents available                                                                  |Optional|
+|**defaultErrorHandler**   | Callback executed to return while using the sdk
 |**onAuthenticated**       | Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
 |**onClose**               | Triggered when close button is executed                                                                                    |Optional|
 
-### Callbacks return the following data structures:
+### Callbacks data
 
 ##### Templates (listTemplatesCallback)
 
@@ -277,7 +306,6 @@ The `exportResolution` resolution attribute define the quality at which the docu
             ],
             "page_format_reference": "H6BWnAc27l8hMvbItcmJ",
             "cover": {
-                "regular": "https://xyz.trakto.io/abcd.png",
                 "low": "https://xyz.trakto.io/1234.png",
                 "medium": "https://xyz.trakto.io/qwerty.png",
                 "high": "https://xyz.trakto.io/zxcvb.png",
@@ -321,7 +349,6 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**id**             | String    | Templates's id. This field is unique
 |**created_at**     | Date      | Date the document was created.
 |**thumb**          | Object    | Image of the first page of the Template that was created by the user.
-|**regular**        | String    | Thumb with regular quality.
 |**low**            | String    | Thumb with regular low.
 |**medium**         | String    | Thumb with regular medium.
 |**height**         | String    | Thumb with regular high.
@@ -342,7 +369,6 @@ The `exportResolution` resolution attribute define the quality at which the docu
                 "unit": "px"
             },
             "thumbs": {
-                "regular": "https://xyz.trakto.io/abcd.png",
                 "low": "https://xyz.trakto.io/1234.png",
                 "medium": "https://xyz.trakto.io/qwerty.png",
                 "high": "https://xyz.trakto.io/zxcvb.png",
@@ -366,7 +392,6 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**published_at**   | Date      | Date of availability
 |**Thumb**          | Object    | Image of the first page of the template that was created by the user.
 |**Cover**          | Object    | Promotional Image
-|**regular**        | String    | Thumb with regular quality
 |**low**            | String    | Thumb with regular low
 |**medium**         | String    | Thumb with regular medium
 |**hight**          | String    | Thumb with regular high
@@ -395,7 +420,6 @@ The `exportResolution` resolution attribute define the quality at which the docu
                                 "width": 12345
                             },
                             "edited": false,
-                                "regular": "https://xyz.trakto.io/abcd.png",
                                 "low": "https://xyz.trakto.io/1234.png",
                                 "medium": "https://xyz.trakto.io/qwerty.png",
                                 "high": "https://xyz.trakto.io/zxcvb.png",
@@ -554,14 +578,13 @@ The `exportResolution` resolution attribute define the quality at which the docu
 |**document_id**    | String    | Document's id. This field is unique
 |**created_at**     | Date      | Date the document was created.
 |**thumb**          | Object    | Image of the first page of the Template that was created by the user.
-|**regular**        | String    | Thumb with regular quality.
 |**low**            | String    | Thumb with regular low.
 |**medium**         | String    | Thumb with regular medium.
 |**height**         | String    | Thumb with regular high.
 |**page_index**     | Number    | Represents the index (order number) of the page in the document.
 |**page_format_id** | String    | Page's format identifier.
 
-# 8) Using the Rest API
+# 10) Rest API
 
 All the enpdoints are enabled just in user context. Thus, the informations that will be used refers only to a user connected to his custom editor created with Trakto®
 
@@ -576,7 +599,6 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
 |**title**          | String    | Title defined by user.
 |**thumb**          | Object    | Image of the first page of the Template that was created by the user.
 |**cover**          | Object    | Promotional image.
-|**regular**        | String    | Thumb with regular quality.
 |**low**            | String    | Thumb with regular low.
 |**medium**         | String    | Thumb with regular medium.
 |**height**         | String    | Thumb with regular high.
@@ -613,14 +635,12 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
                         "width": 12345
                     },
                     "edited": false,
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
                     "raw": "https://xyz.trakto.io/asdfg.png"
                 },
                 "cover": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
@@ -676,14 +696,12 @@ All the enpdoints are enabled just in user context. Thus, the informations that 
                         "width": 12345
                     },
                     "edited": false,
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
                     "raw": "https://xyz.trakto.io/asdfg.png"
                 },
                 "cover": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
@@ -715,7 +733,6 @@ This endpoint list all formats that can used for create a empty document.
 |**published_at**   | Date      | Date of availability
 |**Thumb**          | Object    | Image of the first page of the template that was created by the user.
 |**Cover**          | Object    | Promotional Image
-|**regular**        | String    | Thumb with regular quality
 |**low**            | String    | Thumb with regular low
 |**medium**         | String    | Thumb with regular medium
 |**hight**          | String    | Thumb with regular high
@@ -750,7 +767,6 @@ This endpoint list all formats that can used for create a empty document.
                     "unit": "px"
                 },
                 "thumbs": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
@@ -790,7 +806,6 @@ This endpoint list all formats that can used for create a empty document.
                     "unit": "px"
                 },
                 "thumbs": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
@@ -811,7 +826,6 @@ This endpoint list all formats that can used for create a empty document.
 |**title**          | String    | Title defined by user.
 |**edited**         | String    | Identifies if the document has been changed
 |**Thumb**          | Object    | Image of the first page of the document that was created by the user.
-|**regular**        | String    | Thumb with regular quality.
 |**low**            | String    | Thumb with regular low.
 |**medium**         | String    | Thumb with regular medium.
 |**high**           | String    | Thumb with regular high.
@@ -843,7 +857,6 @@ This endpoint list all formats that can used for create a empty document.
                 "printable": false,
                 "edited": true,
                 "thumb": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
@@ -952,7 +965,6 @@ Creates a new document for the user using the contents of a template
                 "title": "Lorem Ipsum",
                 "printable": false,
                 "thumbs": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
@@ -998,7 +1010,6 @@ Creates a new document for the user using the contents of a template
                 "title": "Lorem Ipsum",
                 "printable": false,
                 "thumbs": {
-                    "regular": "https://xyz.trakto.io/abcd.png",
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
                     "high": "https://xyz.trakto.io/zxcvb.png",
