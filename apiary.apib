@@ -280,85 +280,87 @@ The **exportResolution** resolution attribute define the quality at which the do
 **Example:**
 
 ```
-           TraktoEditor.listTemplates(
-              { 
-                created_between_start: new Date(2010, 1, 1), 
-                created_between_end: new Date(2025, 6, 31) 
-              },
-              onSuccessLoadDocs,
-              '.page-content__pagination-next',
-              '.page-content__pagination-previous'
-            );
+    TraktoEditor.listTemplates(
+    { 
+        created_between_start: new Date(2010, 1, 1), 
+        created_between_end: new Date(2025, 6, 31) 
+    },
+    onSuccessLoadDocs,
+    '.page-content__pagination-next',
+    '.page-content__pagination-previous');
+```
+
+```
+    function onSuccessLoadDocs(page, buttonAttr) {
+        console.log(`Trakto Data - ${page}`);
+    }
 ```
 
 #### a. Implementation of the listDocuments
 
 ```
-            TraktoEditor.listDocuments({ 
-                created_between_start: new Date(2010, 1, 1), 
-                created_between_end: new Date(2025, 6, 31),
-                limit: 15
-            },
-            <Your JS Functions That will receive list on the page>,
-            '<BUTTON PAGINATION NEXT - CLASS>',
-            '<BUTTON PAGINATION PREVIOUS - CLASS>',
-            );
+    TraktoEditor.listDocuments({ 
+        created_between_start: new Date(2010, 1, 1), 
+        created_between_end: new Date(2025, 6, 31),
+        limit: 15
+    },
+    <Your_JS_Functions_That_will_receive_list_on_the_page>,
+    '<BUTTON_PAGINATION_NEXT_CLASS>',
+    '<BUTTON_PAGINATION_PREVIOUS_CLASS>',
+    );
 ```
 
 #### b. Implementation of the listTemplates
 
 ```Javascript
-            TraktoEditor.listTemplates({ 
-                created_between_start: new Date(2010, 1, 1), 
-                created_between_end: new Date(2025, 6, 31) 
-            },
-            <Your JS Functions That will receive list on the page>,
-            '<BUTTON PAGINATION NEXT  - CLASS>',
-            '<BUTTON PAGINATION PREVIOUS - CLASS>',
-            );
+    TraktoEditor.listTemplates({ 
+        created_between_start: new Date(2010, 1, 1), 
+        created_between_end: new Date(2025, 6, 31) 
+    },
+    <Your_JS_Functions_That_will_receive_list_on_the_page>,
+    '<BUTTON_PAGINATION_NEXT_CLASS>',
+    '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
 #### c. Implementation of the listFormats
 
 ```Javascript
-            TraktoEditor.listFormats({ 
-                created_between_start: new Date(2010, 1, 1), 
-                created_between_end: new Date(2025, 6, 31),
-                limit: 10
-            },
-            <Your JS Functions That will receive list on the page>,
-            '<BUTTON PAGINATION - CLASS>',
-            '<BUTTON PAGINATION - CLASS>',
-            );
+    TraktoEditor.listFormats({ 
+        created_between_start: new Date(2010, 1, 1), 
+        created_between_end: new Date(2025, 6, 31),
+        limit: 10
+    },
+    <Your_JS_Functions_That_will_receive_list_on_the_page>,
+    '<BUTTON_PAGINATION_NEXT_CLASS>',
+    '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
 #### d. Implementation of the listThemes
 
 ```Javascript
-            TraktoEditor.listThemes({ 
-                created_between_start: new Date(2010, 1, 1), 
-                created_between_end: new Date(2025, 6, 31) 
-            },
-            <Your JS Functions That will receive list on the page>,
-            '<BUTTON PAGINATION NEXT - CLASS>',
-            '<BUTTON PAGINATION PREVIOUS - CLASS>',
-            );
+    TraktoEditor.listThemes({ 
+        created_between_start: new Date(2010, 1, 1), 
+        created_between_end: new Date(2025, 6, 31) 
+    },
+    <Your_JS_Functions_That_will_receive_list_on_the_page>,
+    '<BUTTON_PAGINATION_NEXT_CLASS>',
+    '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
 #### d. Implementation of the listThemes
 
 ```Javascript
-            TraktoEditor.listThemes({ 
-                created_between_start: new Date(2010, 1, 1), 
-                created_between_end: new Date(2025, 6, 31) 
-            },
-            <Your JS Functions That will receive list on the page>,
-            '<BUTTON PAGINATION NEXT - CLASS>',
-            '<BUTTON PAGINATION PREVIOUS - CLASS>',
-            );
+    TraktoEditor.listThemes({ 
+        created_between_start: new Date(2010, 1, 1), 
+        created_between_end: new Date(2025, 6, 31) 
+    },
+    <Your_JS_Functions_That_will_receive_list_on_the_page>,
+    '<BUTTON_PAGINATION_NEXT_CLASS>',
+    '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
 #### e. Delete a document
+
 ```
     traktoEditor.deleteDocument('042dgWLwC', data => console.log('deleted', data));
 ```
