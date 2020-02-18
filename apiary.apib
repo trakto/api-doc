@@ -263,13 +263,14 @@ The **exportResolution** resolution attribute define the quality at which the do
 
 
 #### Attributes Filters
-|Function                   | Required | Type   | Supported functions        | Description                                                                |
-|---------------------------|----------|--------|----------------------------|----------------------------------------------------------------------------|
-|**created_between_start**  | No       | Date   | all                        |  Filters by initial date. Used in combination with "created_between_end"   |
-|**created_between_end**    | No       | Date   | all                        |  Filters by initial date. Used in combination with "created_between_start" |
-|**page_format_id**         | No       | String | listTemplates              |  Filter by page's format id                                                |
-|**theme_id**               | No       | String | listTemplates              |  Filter by thems's id                                                      |
-|**limit**                  | No       | Number | listFormats, listDocuments |  Number of items per page                                                  |
+|Function                   | Required | Type    | Supported functions        | Description                                                                |
+|---------------------------|----------|---------|----------------------------|----------------------------------------------------------------------------|
+|**created_between_start**  | No       | Date    | all                        |  Filters by initial date. Used in combination with "created_between_end"   |
+|**created_between_end**    | No       | Date    | all                        |  Filters by initial date. Used in combination with "created_between_start" |
+|**limit**                  | No       | Number  | all                        |  Number of items per page                                                  |
+|**page_format_id**         | No       | String  | listTemplates              |  Filter by page's format id                                                |
+|**theme_id**               | No       | String  | listTemplates              |  Filter by thems's id                                                      |
+|**is_published**           | No       | Boolean | listTemplates              |  Filter by publish status                                                      |
 
 ### Using Functions
 
