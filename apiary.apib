@@ -648,27 +648,27 @@ For send the user to dashboard, use the route: `https://[your dashboard link]/au
 
     + Body
     
-    {
-        "user_email": "user@trakto.io",
-        "product_key": "3fak2krda"
-    }
+            {
+                "user_email": "user@trakto.io",
+                "product_key": "3fak2krda"
+            }
 
 
 + Response 200 (application/json)
 
-    {
-        "email": "user@trakto.io",
-        "app_id": "59YvyzoCi0IMS7xybbRG",
-        "products": [
-            "3fak2krda"
-        ],
-        "role": {
-            "title": "User",
-            "value": "user"
-        },
-        "token": "6ScvaPPSDpHT",
-        "authToken": "hdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNv"
-    }
+            {
+                "email": "user@trakto.io",
+                "app_id": "59YvyzoCi0IMS7xybbRG",
+                "products": [
+                    "3fak2krda"
+                ],
+                "role": {
+                    "title": "User",
+                    "value": "user"
+                },
+                "token": "6ScvaPPSDpHT",
+                "authToken": "hdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNv"
+            }
 
 ### List all Templates [/templates]
 
