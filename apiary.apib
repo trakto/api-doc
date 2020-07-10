@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: https://main.trakto.io/docsApi/api/v1
 
-# Trakto Button & API 
+# Trakto SDK
 
 <img src="https://trakto.design/img/editor/01.Trakto.png" width=100%>
 
@@ -40,17 +40,12 @@ When you're testing`localhost`, the Trakto Button® and Sdk® is avaliable only 
 |http://localhost:8080|
 
 ## Live mode
-| Tool  | URL                                                 | Mode | 
-|-------|-----------------------------------------------------|------|
-|**Sdk**| https://sdk.trakto.io/trakto-editor.min.js          | Live |
-|**Sdk**| https://sdk-review.web.app/trakto-editor.min.js     | Beta |
-|**API**| https://main.trakto.io/docsApi/api/v1/              | Live |
-
-## Test mode
-| Tool  | URL                                        |
-|-------|--------------------------------------------|
-|**Sdk**| Coming Soon                                |
-|**API**| Coming Soon                                |
+| Tool  | URL                                                                           | Mode |
+|-------|-------------------------------------------------------------------------------|------|
+|**Sdk**| https://sdk.trakto.io/trakto-editor.min.js                                    | Live |
+|**Sdk**| https://sdk-review.web.app/trakto-editor.min.js                               | Beta |
+|**API**| https://us-central1-trakto-production.cloudfunctions.net/docsApi/api/v1/      | Live |
+|**API**| https://us-central1-trakto-production.cloudfunctions.net/docsApiBeta/api/v1/  | Beta |
 
 # 4) Examples
 
@@ -633,6 +628,48 @@ The **exportResolution** resolution attribute define the quality at which the do
 
 All the enpdoints are enabled just in user context. Thus, the informations that will be used refers only to a user connected to his custom editor created with Trakto®
 
+### Create an Authentication Token for dashboardd login [/auth]
+
+"Authentication token" or "authToken" are generated keys for make login with Trakto's Dashboard. 
+For example you could create a authentication token if you can send directly an user from your platform to Trakto's Dashboard without need fill the login page.
+
+For send the user to dashboard, use the route: `https://[your dashboard link]/auth/i/:authToken`
+
+> **Note:** Now, this request is avaliable only beta version for API and Dashboard. 
+
+### Request [POST]
+
++ Request 
+
+    + Header 
+
+                Content-Type: application/json
+                Origin: [your domain]
+
+    + Body
+    
+    {
+        "user_email": "user@trakto.io",
+        "product_key": "3fak2krda"
+    }
+
+
++ Response 200 (application/json)
+
+    {
+        "email": "user@trakto.io",
+        "app_id": "59YvyzoCi0IMS7xybbRG",
+        "products": [
+            "3fak2krda"
+        ],
+        "role": {
+            "title": "User",
+            "value": "user"
+        },
+        "token": "6ScvaPPSDpHT",
+        "authToken": "hdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNv"
+    }
+
 ### List all Templates [/templates]
 
 | Attribute         |Type       | Description
@@ -797,7 +834,7 @@ This endpoint list all formats that can used for create a empty document.
                 User-Token: 0IMS7xybbRG
                 Product-Key: 3fak2krda
                 Origin: http://localhost:8080
-
+    
 + Response 200 (application/json)
 
         [
