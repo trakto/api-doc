@@ -100,6 +100,7 @@ The image below shows the datailed flow of button operation when integrated into
                 closeButtonClass: 'your-class-here',
                 closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
+                defaultFiletype: '<base64 | url>',
                 defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
@@ -128,6 +129,7 @@ The image below shows the datailed flow of button operation when integrated into
                 closeButtonClass: 'your-class-here',
                 closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
+                defaultFiletype: '<base64 | url>',
                 defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
@@ -143,7 +145,8 @@ The image below shows the datailed flow of button operation when integrated into
                             backgroundImage: '',
                             width: 1,
                             height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
+                            exportFiletype: '<base64 | url>'
                         });
                         
                         traktoEditor.openFromFormat('<Format ID>', data => { console.log('openFromFormat finished'); }, 
@@ -151,7 +154,8 @@ The image below shows the datailed flow of button operation when integrated into
                             backgroundImage: '',
                             width: 1,
                             height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
+                            exportFiletype: '< base64 | url>'
                         });
                         
                         traktoEditor.openFromTemplate('<Template ID>', data => { console.log('openFromTemplate finished'); }, 
@@ -159,12 +163,14 @@ The image below shows the datailed flow of button operation when integrated into
                             backgroundImage: '',
                             width: 1,
                             height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
+                            exportFiletype: '<base64 | url>'
                         });
                         
                         traktoEditor.openDocument('<Document ID>', data => { console.log('openDocument finished');},
                         {
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high']
+                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
+                            exportFiletype: '<base64 | url>'
                         );
                     }
                 },
@@ -190,6 +196,7 @@ The image below shows the datailed flow of button operation when integrated into
 | **closeButtonClass**     | String  | No       | CSS Class for modal close button.
 | **closeButton**          | String  | No       | The close the modal button, with the possibility of plain text or html.
 | **standaloneMode**       | String  | No       | Defines whether the user instance is created in the startup sdk. True during startup, FALSE when some resource is used.
+| **defaultFiletype**      | String  | No       | Defines the default type of file exported to your application. If do you use the button, the type is considered. Otherwise, if do you use JS Functions for start the sdk, this type is considered when the fileType is undefined. The field can receive "url" or "Base64"   
 
 # 7) Creating or editing a document via Trakto Button®
 
@@ -236,6 +243,7 @@ The image below shows the datailed flow of button operation when integrated into
 |**Width**              | No       | Page's Width                                                                          | Required |
 |**height**             | No       | Page's Height                                                                         | Required |
 |**exportResolution**   | Yes      | Export Resolution                                                                     | Required |
+|**exportFiletype**     | No       | Type of exported file                                                                 | Optional |
 |**data**               | -        | Response from Trakto's editor                                                         | Required |
 
 #### Resolution types
@@ -477,7 +485,7 @@ The **exportResolution** resolution attribute define the quality at which the do
                     {   
                         {
                             "page_index": 0,
-                            "page_format_id": "stehrsxvgm"
+                            "page_format_id": "stehrsxvgm",
                             "thumb":{
                             "dimensions":{
                                 "height": 12345,
@@ -631,7 +639,7 @@ The **exportResolution** resolution attribute define the quality at which the do
 
 All the enpdoints are enabled just in user context. Thus, the informations that will be used refers only to a user connected to his custom editor created with Trakto®
 
-### Create an Authentication Token for dashboardd login [/auth]
+### Create an Authentication Token for dashboard login [/auth]
 
 "Authentication token" or "authToken" are generated keys for make login with Trakto's Dashboard. 
 For example you could create a authentication token if you can send directly an user from your platform to Trakto's Dashboard without need fill the login page.
