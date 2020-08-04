@@ -112,6 +112,8 @@ The image below shows the datailed flow of button operation when integrated into
 </script>
 ```
 
+> Note: defaultFiletype is avaliable only Beta version of SDK
+
 ## Starting via JS Function
 
 ```javascript
@@ -183,6 +185,8 @@ The image below shows the datailed flow of button operation when integrated into
     }; 
 </script>
 ```
+> Note: defaultFiletype and exportFiletype is avaliable only Beta version of SDK
+
 
 # 6) Customize the editor
 
@@ -197,6 +201,8 @@ The image below shows the datailed flow of button operation when integrated into
 | **closeButton**          | String  | No       | The close the modal button, with the possibility of plain text or html.
 | **standaloneMode**       | String  | No       | Defines whether the user instance is created in the startup sdk. True during startup, FALSE when some resource is used.
 | **defaultFiletype**      | String  | No       | Defines the default type of file exported to your application. If do you use the button, the type is considered. Otherwise, if do you use JS Functions for start the sdk, this type is considered when the fileType is undefined. The field can receive "url" or "Base64"   
+
+> Note: defaultFiletype is avaliable only Beta version of SDK
 
 # 7) Creating or editing a document via Trakto Button®
 
@@ -243,8 +249,10 @@ The image below shows the datailed flow of button operation when integrated into
 |**Width**              | No       | Page's Width                                                                          | Required |
 |**height**             | No       | Page's Height                                                                         | Required |
 |**exportResolution**   | Yes      | Export Resolution                                                                     | Required |
-|**exportFiletype**     | No       | Type of exported file                                                                 | Optional |
+|**exportFiletype**     | No       | Type of exported file. Only base64 and url are accepted on attribute.                 | Optional |
 |**data**               | -        | Response from Trakto's editor                                                         | Required |
+
+> Note: exportFiletype is avaliable only Beta version of .
 
 #### Resolution types
 The **exportResolution** resolution attribute define the quality at which the document will be exported by Trakto Editor.
