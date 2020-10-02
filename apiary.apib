@@ -3,7 +3,6 @@ HOST: https://main.trakto.io/docsApi/api/v1
 
 # Trakto SDK
 
-<img src="https://trakto.design/img/editor/01.Trakto.png" width=100%>
 
 # 1) Concepts
 
@@ -259,10 +258,10 @@ The **exportResolution** resolution attribute define the quality at which the do
 
 | Type             | Description                             |
 |------------------|-----------------------------------------|
-| **thumbnail**    | 30% of original image size and quality  |
-| **low**          | 50% of original image size and quality  |
+| **raw**          | Original image size and quality         |
+| **low**          | 30% of original image size and quality  |
 | **medium**       | Original image size and quality         |
-| **high**         | 300% of original image size and quality |
+| **high**         | 3x bigger than original image size      |
 
 ### Managing themes, page formats, documents and templates 
 
@@ -687,6 +686,36 @@ For send the user to dashboard, use the route: `https://[your dashboard link]/au
                 },
                 "token": "6ScvaPPSDpHT",
                 "authToken": "hdWQiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNv"
+            }
+
+### Enable or disable user authentication [/auth/permission]
+Blocks or enable user authentication (login) on platform. 
+
+| Attribute         |Type       | Description
+|---                |---        | ---
+|**id**             | String    | Template's identifier.
+|**created_at**     | Date      | Date the template was created.
+
+### Request [POST]
+
++ Request 
+
+    + Header 
+
+                Content-Type: application/json
+                Origin: http://localhost:8080
+    + Body
+    
+            {   
+                "user_email": "user@trakto.io",
+                "product_key": "g3l5yDh",
+                "can_authenticate": false
+            }
+
++ Response 200 (application/json)
+
+            {
+                "status": true
             }
 
 ### List all Templates [/templates]
