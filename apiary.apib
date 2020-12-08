@@ -691,10 +691,11 @@ For send the user to dashboard, use the route: `https://[your dashboard link]/au
 ### Enable or disable user authentication [/auth/permission]
 Blocks or enable user authentication (login) on platform. 
 
-| Attribute         |Type       | Description
-|---                |---        | ---
-|**id**             | String    | Template's identifier.
-|**created_at**     | Date      | Date the template was created.
+| Attribute               |Type          | Description
+|---                      |---           | ---
+|**user_email**           | String       | User's email
+|**can_authenticate**     | Booelan      | If true, user can make login
+|**product_key**          | Booelan      | You product Key used by user
 
 ### Request [POST]
 
@@ -717,6 +718,41 @@ Blocks or enable user authentication (login) on platform.
             {
                 "status": true
             }
+
+### Receive user profile [/user]
+List all basic profile's data from user
+
+| Attribute                 |Type           | Description
+|---                        |---            | ---
+|**email**                  | String        | User's email.
+|**can_authenticate**       | Boolean       | Defines if this user can authenticate or not with other Trakto's plataform.
+|**avatar**                 | String        | User's profile image
+|**firstname**              | String        | User's firstname
+|**lastname**               | String        | User's lastname
+|**phonenumber**            | String        | User's phonenumber
+
+### Request [GET]
+
++ Request 
+
+    + Header 
+
+                Content-Type: application/json
+                API-Secret: 59YvyzoCi0IMS7xybbRG
+                User-Token: 0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: 59YvyzoCi0IMS7xybbRG
+
++ Response 200 (application/json)
+
+                {
+                    "email": "userb@trakto.io",
+                    "can_authenticate": true,
+                    "firstname": "Lorem",
+                    "lastname": "Ipsum",
+                    "phonenumber": "11999999999",
+                    "avatar": "https://cdn.link.com/abcd.png"
+                }
 
 ### List all Templates [/templates]
 
@@ -953,6 +989,7 @@ This endpoint list all formats that can used for create a empty document.
 |**created_at**     | String    | Date the document was created.
 |**updated_at**     | String    | Last date that document was updated.
 |**deleted_at**     | String    | Document's deleted date document.
+|**link**           | Object    | Refers to document's preview. For document preview use the path: https://trakto.link/your_link_name
 |**title**          | String    | Title defined by user.
 |**edited**         | String    | Identifies if the document has been changed
 |**Thumb**          | Object    | Image of the first page of the document that was created by the user.
@@ -986,6 +1023,10 @@ This endpoint list all formats that can used for create a empty document.
                 "title": "Lorem Ipsum",
                 "printable": false,
                 "edited": true,
+                "link": {
+                    "link_name": "/path_to_preview",
+                    "link_qrcode": "https://xyz.trakto.io/1234.png"
+                }
                 "thumb": {
                     "low": "https://xyz.trakto.io/1234.png",
                     "medium": "https://xyz.trakto.io/qwerty.png",
@@ -1006,6 +1047,129 @@ This endpoint list all formats that can used for create a empty document.
             }
         ]
 
+
+## Update document's title [/documents/{document_id}/title]
+
+| Attribute         |Type       | Description
+|---                |---        | ---
+|**title**          | String    | Title of user's document
+
+### Request [POST]
+
++ Parameters
+    + document_id (required, string, `1lKM6m5gpL9Z9ZiV`) ... Document's ID
+
++ Request
+
+    + Headers 
+
+                Content-Type: application/json
+                API-Secret: 59YvyzoCi0IMS7xybbRG
+                User-Token: 0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: 59YvyzoCi0IMS7xybbRG    
+    + Body
+    
+            {
+                "title": "Lorem Ipsum"
+            }
+
+
++ Response 200 (application/json)
+    
+            {
+                "title": "Lorem Ipsum"
+            }
+
+
+## Create and update link of document's preview [/documents/{document_id}/link]
+
+To create a new link of document's preview
+
+| Attribute         |Type       | Description
+|---                |---        | ---
+|**visits**         | Object    | Description of visits
+|**region**         | String    | Visit's city
+|**total_visits**   | Integer   | Count of visits
+|**date**           | Date      | Related date
+
+### Request [POST]
+
++ Parameters
+    + document_id (required, string, `1lKM6m5gpL9Z9ZiV`) ... Document's ID
+
++ Request
+
+    + Headers 
+
+                Content-Type: application/json
+                API-Secret: 59YvyzoCi0IMS7xybbRG
+                User-Token: 0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: 59YvyzoCi0IMS7xybbRG    
+    + Body
+    
+            {
+                "link_name": "LoremIpsum"
+            }
+
++ Response 200 (application/json)
+
+            {
+                "document_link": "https://trakto.link/LoremIpsum"
+            }
+
+
+### Statistics from document's preview [/documents/{document_id}/link]
+Receive's all count of visits grouped by region from document's preview.
+
+### Request [POST]
+
++ Parameters
+    + document_id (required, string, `1lKM6m5gpL9Z9ZiV`) ... Document's ID
+
++ Request 
+
+    + Headers 
+
+                Content-Type: application/json
+                API-Secret: 59YvyzoCi0IMS7xybbRG
+                User-Token: 0IMS7xybbRG
+                Product-Key: 3fak2krda
+                Origin: 59YvyzoCi0IMS7xybbRG
+
++ Response 200 (application/json)
+
+                {
+                    "visits": [
+                        {
+                            "region": "Sao Paulo",
+                            "visits": [
+                                {
+                                    "date": "2020-10-01T00:00:00.000Z",
+                                    "total_visits": 136
+                                },
+                                {
+                                    "date": "2020-10-02T00:00:00.000Z",
+                                    "total_visits": 28
+                                }
+                            ]
+                        },
+                        {
+                            "region": "Alagoas",
+                            "visits": [
+                                {
+                                    "date": "2020-10-01T00:00:00.000Z",
+                                    "total_visits": 45
+                                },
+                                {
+                                    "date": "2020-10-02T00:00:00.000Z",
+                                    "total_visits": 213
+                                }
+                            ]
+                        }
+                    ]
+                }
 
 ## Create a copy of document [/documents/{document_id}/clone]
 Creates a new copy of a user's document.
