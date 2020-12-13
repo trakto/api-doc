@@ -1123,6 +1123,13 @@ To create a new link of document's preview
 ### Statistics from document's preview [/documents/{document_id}/link]
 Receive's all count of visits grouped by region from document's preview.
 
+| Attribute         |Type       | Required | Description
+|---                |---        |----      | ---
+|**filter**         | String    | No       | Groups your visits based on "day", "week" and "month"
+|**fromDate**       | String    | No       | Start date to count your visits. This field must be on format "YYYY-MM-DD"
+|**toDate**         | String    | No       | Final date to count your visits. This field must be on format "YYYY-MM-DD"
+|**visits**         | Object    | -        | Description of visits
+|**totalVisits**    | Integer   | -        | Count of group's visit
 ### Request [POST]
 
 + Parameters
@@ -1137,39 +1144,58 @@ Receive's all count of visits grouped by region from document's preview.
                 User-Token: 0IMS7xybbRG
                 Product-Key: 3fak2krda
                 Origin: 59YvyzoCi0IMS7xybbRG
+    + Body
+    
+            {
+                "fromDate": "2020-12-01",
+                "toDate": "2020-12-20",
+                "filter": "week"
+            }
 
 + Response 200 (application/json)
 
-                {
-                    "visits": [
-                        {
-                            "region": "Sao Paulo",
-                            "visits": [
-                                {
-                                    "date": "2020-10-01T00:00:00.000Z",
-                                    "total_visits": 136
-                                },
-                                {
-                                    "date": "2020-10-02T00:00:00.000Z",
-                                    "total_visits": 28
-                                }
-                            ]
-                        },
-                        {
-                            "region": "Alagoas",
-                            "visits": [
-                                {
-                                    "date": "2020-10-01T00:00:00.000Z",
-                                    "total_visits": 45
-                                },
-                                {
-                                    "date": "2020-10-02T00:00:00.000Z",
-                                    "total_visits": 213
-                                }
-                            ]
-                        }
-                    ]
-                }
+            {
+                "visits": [
+                    {
+                        "region": "Sao Paulo",
+                        "filter": "week",
+                        "total_visits": 125,
+                        "visits": [
+                            {
+                                "date": "2020-11-30T00:00:00.000Z",
+                                "total_visits": 78
+                            },
+                            {
+                                "date": "2020-12-07T00:00:00.000Z",
+                                "total_visits": 47
+                            },
+                            {
+                                "date": "2020-12-14T00:00:00.000Z",
+                                "total_visits": 0
+                            }
+                        ]
+                    },
+                    {
+                        "region": "Paraíba",
+                        "filter": "week",
+                        "total_visits": 50,
+                        "visits": [
+                            {
+                                "date": "2020-11-30T00:00:00.000Z",
+                                "total_visits": 50
+                            },
+                            {
+                                "date": "2020-12-07T00:00:00.000Z",
+                                "total_visits": 0
+                            },
+                            {
+                                "date": "2020-12-14T00:00:00.000Z",
+                                "total_visits": 0
+                            }
+                        ]
+                    }
+                ]
+            }
 
 ## Create a copy of document [/documents/{document_id}/clone]
 Creates a new copy of a user's document.
