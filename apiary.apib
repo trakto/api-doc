@@ -771,6 +771,8 @@ List all basic profile's data from user
 |**printable**      | Boolean   | Identifies whether print clipping marks are enabled.
 |**page_index**     | Number    | Represents the index (order number) of the page in the document.
 |**page_format_id** | String    | Page's format identifier.
+|**order_sort**     | String    | Represent "direction" of list order. The values acceptables are: "asc" and "desc"
+|**order_by**       | String    | Represent type of list order. The values acceptables are: "created_at" and "update_at"
 
 ### Request [GET]
 
@@ -999,7 +1001,8 @@ This endpoint list all formats that can used for create a empty document.
 |**printable**      | Boolean   | Identifies whether print clipping marks are enabled.
 |**page_index**     | Number    | Represents the index (order number) of the page in the document.
 |**page_format_id** | String    | Page's format identifier.
-
+|**order_sort**     | String    | Represent "direction" of list order. The values acceptables are: "asc" and "desc"
+|**order_by**       | String    | Represent type of list order. The values acceptables are: "created_at" and "update_at"
 
 ### Request [GET]
 
