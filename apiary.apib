@@ -54,7 +54,7 @@ When you're testing`localhost`, the Trakto Button® and Sdk® is avaliable only 
 1. See our example project in **Github**: https://github.com/trakto/trakto-sdk-sample
 2. See the button in **action**: https://sdk-sample-page.web.app/
 
-# 5) Getting Started with Trakto Button®
+# 5) Getting Started with Trakto SDK®
 
 The Trakto Button® allows the Trakto editor to be used within your application.
 
@@ -111,7 +111,6 @@ The image below shows the datailed flow of button operation when integrated into
 </script>
 ```
 
-> Note: defaultFiletype is avaliable only Beta version of SDK
 
 ## Starting via JS Function
 
@@ -135,44 +134,9 @@ The image below shows the datailed flow of button operation when integrated into
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
                 listDocumentsCallback: (data) => {},
-                onAuthenticated: traktoEditor => {
-                    if (traktoEditor) {
-                        
-                        traktoEditor.deleteDocument('<Document ID>', data => { 
-                            console.log('Document Deleted', data);
-                        });
-                        
-                        traktoEditor.openBlank(data => console.log('openBlank finished'), {
-                            backgroundImage: '',
-                            width: 1,
-                            height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
-                            exportFiletype: '<base64 | url>'
-                        });
-                        
-                        traktoEditor.openFromFormat('<Format ID>', data => { console.log('openFromFormat finished'); }, 
-                        {
-                            backgroundImage: '',
-                            width: 1,
-                            height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
-                            exportFiletype: '< base64 | url>'
-                        });
-                        
-                        traktoEditor.openFromTemplate('<Template ID>', data => { console.log('openFromTemplate finished'); }, 
-                        {
-                            backgroundImage: '',
-                            width: 1,
-                            height: 1,
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
-                            exportFiletype: '<base64 | url>'
-                        });
-                        
-                        traktoEditor.openDocument('<Document ID>', data => { console.log('openDocument finished');},
-                        {
-                            exportResolution: ['thumbnail', 'low', 'medium', 'high'],
-                            exportFiletype: '<base64 | url>'
-                        );
+                onAuthenticated: editor => {
+                    if (editor) {
+                        // Calls for open the editor using a template, document, etc. 
                     }
                 },
                 
@@ -187,10 +151,24 @@ The image below shows the datailed flow of button operation when integrated into
 > Note: defaultFiletype and exportFiletype is avaliable only Beta version of SDK
 
 
-# 6) Customize the editor
+# 6) Callbacks from SDK
+
+
+|Fields                    | Description                                                                                                                |Required|
+|--------------------------|----------------------------------------------------------------------------------------------------------------------------|--------|
+|**defaultCallback**       | Callback executed after document completion in Trakto Editor. Returns the address of the images for the finished document. |Required|
+|**listFormatsCallback**   | Callback executed to return all available page formats to your editor.                                                     |Optional|
+|**listTemplatesCallback** | Callback executed to return all available templates to your editor                                                         |Optional|
+|**listDocumentsCallback** | Callback executed to return all users documents available                                                                  |Optional|
+|**defaultErrorHandler**   | Callback executed to return while using the sdk                                                                            |Optional|
+|**onAuthenticated**       | Callback used to open the editor using templates, documents and blank formats                                              |Optional|
+|**onClose**               | Triggered when close button is executed                                                                                    |Optional|
+
+# 7) Customizing the UI and responses from editor 
 
 | Attribute                |Type     | Required | Description
 |---                       |---      |----      | ---
+| **buttonClassName**      | String  | No       | Used to stylize the look of the button according to its application
 | **customLoaderImageUrl** | String  | No       | ELoader image link used during editor opening.
 | **customLoaderColor**    | String  | No       | Hexadecimal Loader color used during editor opening.
 | **customLoaderBgColor**  | String  | No       | Hexadecimal Loader background color used during editor opening.
@@ -203,7 +181,7 @@ The image below shows the datailed flow of button operation when integrated into
 
 > Note: defaultFiletype is avaliable only Beta version of SDK
 
-# 7) Creating or editing a document via Trakto Button®
+# 8) Creating or editing a document via Trakto HTML Button®
 
 ### Creating from page format
 ```
@@ -227,11 +205,9 @@ The image below shows the datailed flow of button operation when integrated into
 ```
 
 
-# 8) Using the JS Function
+# 9) Managing editor using response from onAuthenticated callback
 
-### Opening the editor
-
-#### Functions
+## Functions
 |Function               | Required | Description                                    
 |-----------------------|----------|------------------------------------------------|
 |**openDocument**       | No       | Opens the document previously created by user  |
@@ -239,21 +215,111 @@ The image below shows the datailed flow of button operation when integrated into
 |**openFromFormat**     | No       | Creates the document from a pages format       |
 |**openBlank**          | No       | Create a new document from a custom size       |
 
-
 #### Atributes
 
 |Function               | Required | Description                                                                           | Required |                                     
 |-----------------------|----------|---------------------------------------------------------------------------------------|----------|
 |**backgroundImage**    | No       | Image url that can be used in the art background. Empty if you do not want to include.| Required |
-|**Width**              | No       | Page's Width                                                                          | Required |
+|**width**              | No       | Page's Width                                                                          | Required |
 |**height**             | No       | Page's Height                                                                         | Required |
 |**exportResolution**   | Yes      | Export Resolution                                                                     | Required |
 |**exportFiletype**     | No       | Type of exported file. Only base64 and url are accepted on attribute.                 | Optional |
 |**data**               | -        | Response from Trakto's editor                                                         | Required |
 
-> Note: exportFiletype is avaliable only Beta version of .
+## How to use
 
-#### Resolution types
+### openDocument
+```
+<script>
+    window.onload = () => {
+      (function () {
+        TraktoEditor.init({
+            ...sdk_configurations_and_callbacks,
+            onAuthenticated: editor => {
+                editor..openDocument('document_id', data => console.log('Response from editor', data));
+            }
+        }
+    )};
+</script>
+```
+
+### openFromTemplate
+```
+<script>
+    const designConfig = { 
+            exportResolution: [...your_export_quality],
+            exportFiletype: 'url' | 'base64',
+            backgroundImage: ''
+    };
+
+    window.onload = () => {
+      (function () {
+        TraktoEditor.init({
+            ...sdk_configurations_and_callbacks,
+            onAuthenticated: editor => {
+                editor.openFromTemplate(
+                    'template_id', 
+                    data => console.log('Response from editor', data), 
+                    designConfig
+                );
+            }
+        }
+    )};
+</script>
+```
+
+### openFromFormat
+```
+<script>
+    const designConfig = { 
+            exportResolution: [...your_export_quality],
+            exportFiletype: 'url' | 'base64',
+            backgroundImage: `You can define an url's image here`
+    };
+
+    window.onload = () => {
+      (function () {
+        TraktoEditor.init({
+            ...sdk_configurations_and_callbacks,
+            onAuthenticated: editor => {
+                editor.openFromTemplate(
+                    'template_id', 
+                    data => console.log('Response from editor', data), 
+                    designConfig
+                );
+            }
+        }
+    )};
+</script>
+```
+
+### openBlank
+```
+<script>
+    const designConfig = { 
+            exportResolution: [...your_export_quality],
+            exportFiletype: 'url' | 'base64',
+            backgroundImage: `You can define an url's image here`
+            width: `You can define a custom width here`,
+            height: `You can define a custom height here`,
+    };
+
+    window.onload = () => {
+      (function () {
+        TraktoEditor.init({
+            ...sdk_configurations_and_callbacks,
+            onAuthenticated: editor => {
+                editor.openBlank(
+                    data => console.log('Response from editor', data), 
+                    designConfig
+                );
+            }
+        }
+    )};
+</script>
+```
+
+### Resolution types
 The **exportResolution** resolution attribute define the quality at which the document will be exported by Trakto Editor.
 
 | Type             | Description                             |
@@ -263,19 +329,37 @@ The **exportResolution** resolution attribute define the quality at which the do
 | **medium**       | Original image size and quality         |
 | **high**         | 3x bigger than original image size      |
 
-### Managing themes, page formats, documents and templates 
+# 10) Managing documents, templates, themes and formats using TraktoEditor instance
 
-#### Functions
+TraktoEditor instance is the object used on sdk start. See below:
+
+```
+<script>
+    window.onload = () => {
+        (function() {
+            TraktoEditor.init({<attributes and callbacks here>})
+            }
+        )}
+</script>
+```
+
+You can use the `TraktoEditor` to list, delete, duplicate some resources from SDK.
+
+> If you don't want to use filters send an empty object like "{ }".
+
+
+## Functions
 |Function               | Description                                    | Supported params                                                      |
 |-----------------------|------------------------------------------------|-----------------------------------------------------------------------|
+|**getDocument**        | Get informations about a document              | Document's id                                                         |
+|**duplicateDocument**  | Duplicate an user's document                   | Document's id                                                         |
 |**deleteDocument**     | Delete the document previously created by user | Document's id                                                         |
-|**listTemplates**      | List published templates                       | created_between_start & created_between_end, page_format_id, theme_id |
 |**listDocuments**      | List all documents previously created by user  | created_between_start & created_between_end, limit                    |
+|**listTemplates**      | List published templates                       | created_between_start & created_between_end, page_format_id, theme_id |
 |**listFormats**        | List all page formats                          | created_between_start & created_between_end, limit                    |
 |**listThemes**         | List all themes used on templates              | created_between_start & created_between_end                           |
 
-
-### Filters
+## Filters
 |Function                   | Required | Type    | Supported functions        | Description                                                                |
 |---------------------------|----------|---------|----------------------------|----------------------------------------------------------------------------|
 |**created_between_start**  | No       | Date    | all                        |  Filters by initial date. Used in combination with "created_between_end"   |
@@ -285,32 +369,26 @@ The **exportResolution** resolution attribute define the quality at which the do
 |**theme_id**               | No       | String  | listTemplates              |  Filter by thems's id                                                      |
 |**is_published**           | No       | Boolean | listTemplates              |  Filter by publish status                                                      |
 
-### Using Functions
-
-**Important Notes:**
-1. **`If you don't want to use filters send an empty object like "{ }"`**
-2. **`TraktoEditor is a main instance and traktoEditor is a instance created from onAuthenticated`**
-
 **Example:**
 
 ```
     TraktoEditor.listTemplates(
-    { 
-        created_between_start: new Date(2010, 1, 1), 
-        created_between_end: new Date(2025, 6, 31) 
-    },
-    onSuccessLoadDocs,
-    '.page-content__pagination-next',
-    '.page-content__pagination-previous');
-```
+        { 
+            created_between_start: new Date(2010, 1, 1), 
+            created_between_end: new Date(2025, 6, 31) 
+        },
+        onSuccessLoadDocs,
+        '.page-content__pagination-next',
+        '.page-content__pagination-previous'
+    );
 
-```
     function onSuccessLoadDocs(page, buttonAttr) {
         console.log(`Trakto Data - ${page}`);
     }
 ```
+## How to use
 
-#### a. Implementation of the listDocuments
+### listDocuments
 
 ```
     TraktoEditor.listDocuments({ 
@@ -324,7 +402,26 @@ The **exportResolution** resolution attribute define the quality at which the do
     );
 ```
 
-#### b. Implementation of the listTemplates
+### deleteDocument
+
+```
+    TraktoEditor.deleteDocument('documentId', data => console.log('deleted', data));
+```
+
+### duplicateDocument
+
+```
+    TraktoEditor.duplicateDocument('documentId', data => console.log('deleted', data));
+```
+
+### copyDocumentToUser
+
+```
+    TraktoEditor.copyDocumentToUser('documentId', 'email to receive the document', data => console.log('deleted', data));
+```
+
+
+### listTemplates
 
 ```Javascript
     TraktoEditor.listTemplates({ 
@@ -336,7 +433,7 @@ The **exportResolution** resolution attribute define the quality at which the do
     '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
-#### c. Implementation of the listFormats
+### listFormats
 
 ```Javascript
     TraktoEditor.listFormats({ 
@@ -349,7 +446,7 @@ The **exportResolution** resolution attribute define the quality at which the do
     '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
-#### d. Implementation of the listThemes
+### listThemes
 
 ```Javascript
     TraktoEditor.listThemes({ 
@@ -361,38 +458,7 @@ The **exportResolution** resolution attribute define the quality at which the do
     '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
 ```
 
-#### d. Implementation of the listThemes
-
-```Javascript
-    TraktoEditor.listThemes({ 
-        created_between_start: new Date(2010, 1, 1), 
-        created_between_end: new Date(2025, 6, 31) 
-    },
-    <Your_JS_Functions_That_will_receive_list_on_the_page>,
-    '<BUTTON_PAGINATION_NEXT_CLASS>',
-    '<BUTTON_PAGINATION_PREVIOUS_CLASS>');
-```
-
-#### e. Delete a document
-
-```
-    traktoEditor.deleteDocument('042dgWLwC', data => console.log('deleted', data));
-```
-
-# 9) About Trakto Button® callbacks
-
-|Fields                    | Description                                                                                                                |Required|
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------|--------|
-|**buttonClassName**       | Used to stylize the look of the button according to its application                                                        |Required|
-|**defaultCallback**       | Callback executed after document completion in Trakto Editor. Returns the address of the images for the finished document. |Required|
-|**listFormatsCallback**   | Callback executed to return all available page formats to your editor.                                                     |Optional|
-|**listTemplatesCallback** | Callback executed to return all available templates to your editor                                                         |Optional|
-|**listDocumentsCallback** | Callback executed to return all users documents available                                                                  |Optional|
-|**defaultErrorHandler**   | Callback executed to return while using the sdk
-|**onAuthenticated**       | Allows the editor to be opened via JS function and identify if SDK has been authenticated correctly                        |Optional|
-|**onClose**               | Triggered when close button is executed                                                                                    |Optional|
-
-# 10) Objects model (Documents, Templates, Pages formats, Themes)
+# 11) Objects model (Documents, Templates, Pages formats, Themes)
 
 ## Templates
 
@@ -772,7 +838,7 @@ List all basic profile's data from user
 |**page_index**     | Number    | Represents the index (order number) of the page in the document.
 |**page_format_id** | String    | Page's format identifier.
 |**order_sort**     | String    | Represent "direction" of list order. The values acceptables are: "asc" and "desc"
-|**order_by**       | String    | Represent type of list order. The values acceptables are: "created_at" and "update_at"
+|**order_by**       | String    | Represent type of list order. The values acceptables are: "created_at" and "updated_at"
 
 ### Request [GET]
 
