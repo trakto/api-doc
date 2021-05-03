@@ -100,7 +100,7 @@ The image below shows the datailed flow of button operation when integrated into
                 closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
                 defaultFiletype: 'base64 | url',
-                downloadType: 'pdf | pdf | png ',
+                downloadType: 'pdf | mp4 | png | fullDownloadOnBrowser',
                 defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
@@ -131,7 +131,7 @@ The image below shows the datailed flow of button operation when integrated into
                 closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
                 defaultFiletype: 'base64 | url',
-                downloadType: 'pdf | pdf | png ',
+                downloadType: 'pdf | mp4 | png | fullDownloadOnBrowser',
                 defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
@@ -180,14 +180,16 @@ The image below shows the datailed flow of button operation when integrated into
 | **closeButton**          | String  | No       | The close the modal button, with the possibility of plain text or html.
 | **standaloneMode**       | String  | No       | Defines whether the user instance is created in the startup sdk. True during startup, FALSE when some resource is used.
 | **defaultFiletype**      | String  | No       | Defines the default type of file exported to your application. If do you use the button, the type is considered. Otherwise, if do you use JS Functions for start the sdk, this type is considered when the fileType is undefined. The field can receive "url" or "Base64"   
-| **downloadType**         | String  | No       | Defines the type of file exported from editor. The attribute accepts: pdf, png or pdf
+| **downloadType**         | String  | No       | Defines the type of file exported from editor. The attribute accepts: pdf, png, pdf or fullDownloadOnBrowser
 
 
 ## About "downloadType" attribute
 
 The editor can export mp4 (video), png (image) and pdf from design created.
-When "pdf" or "mp4" is chosen, the file is exported on browser. 
-For "png", the file is exported on callbacks, using "url" or "base64" on reponse.
+- When "pdf" or "mp4" is chosen, the file is exported on browser. 
+- For "png", the file is exported on callbacks, using "url" or "base64" on reponse.
+- For "fullDownloadOnBrowser", the editor enables all formats for download. 
+The "fullDownloadOnBrowser" allows the user to choose "mp4", "pdf" or "png" formart
 
 The "downloadType" attribute can be used on start of script and JS Functions.
 
@@ -236,7 +238,7 @@ The "downloadType" attribute can be used on start of script and JS Functions.
 |**exportResolution**   | Yes      | Export Resolution                                                                     | Required |
 |**exportFiletype**     | No       | Type of exported file. Only base64 and url are accepted on attribute.                 | Optional |
 |**data**               | -        | Response from Trakto's editor                                                         | Required |
-|**downloadType**       | No       | Defines the type of file exported from editor. The attribute accepts: pdf, png or pdf. The default value is png | Optionnal | 
+|**downloadType**       | No       | Defines the type of file exported from editor. The attribute accepts: fullDownloadOnBrowser, pdf, png or pdf. The default value is png | Optionnal | 
 ## How to use
 
 ### openDocument
@@ -261,7 +263,7 @@ The "downloadType" attribute can be used on start of script and JS Functions.
             exportResolution: [...your_export_quality],
             exportFiletype: 'url' | 'base64',
             backgroundImage: '',
-            downloadType: 'png | pdf | mp4'
+            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser'
     };
 
     window.onload = () => {
@@ -315,7 +317,7 @@ The "downloadType" attribute can be used on start of script and JS Functions.
             backgroundImage: `You can define an url's image here`
             width: `You can define a custom width here`,
             height: `You can define a custom height here`,
-            downloadType: 'png | pdf | mp4'
+            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser'
     };
 
     window.onload = () => {
