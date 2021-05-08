@@ -101,6 +101,8 @@ The image below shows the datailed flow of button operation when integrated into
                 allowNewPages: true,
                 defaultFiletype: 'base64 | url',
                 downloadType: 'pdf | mp4 | png | fullDownloadOnBrowser',
+                saveButtonText: 'Text from save button',
+                saveButtonMessage: 'Message of downloads modal'
                 defaultErrorHandler: error => {},
                 listFormatsCallback: (data) => {},
                 listTemplatesCallback: (data) => {},
@@ -130,6 +132,8 @@ The image below shows the datailed flow of button operation when integrated into
                 closeButtonClass: 'your-class-here',
                 closeButton: `<img src='https://cdn4.com/x.png'/>`,
                 allowNewPages: true,
+                saveButtonText: 'Text from save button',
+                saveButtonMessage: 'Message of downloads modal'
                 defaultFiletype: 'base64 | url',
                 downloadType: 'pdf | mp4 | png | fullDownloadOnBrowser',
                 defaultErrorHandler: error => {},
@@ -176,24 +180,28 @@ The image below shows the datailed flow of button operation when integrated into
 | **customLoaderBgColor**  | String  | No       | Hexadecimal Loader background color used during editor opening.
 | **fullScreen**           | Boolean | No       | Last date that template was updated.
 | **allowNewPages**        | Boolean | No       | Defines whether the user can create new pages for the document.
+| **saveButtonText**       | String  | No       | Defines the text from save button on editor. The defaul value is "Save"
+| **saveButtonMessage**    | String  | No       | Defines the text from modal presented after the click on "Save button"
 | **closeButtonClass**     | String  | No       | CSS Class for modal close button.
 | **closeButton**          | String  | No       | The close the modal button, with the possibility of plain text or html.
 | **standaloneMode**       | String  | No       | Defines whether the user instance is created in the startup sdk. True during startup, FALSE when some resource is used.
 | **defaultFiletype**      | String  | No       | Defines the default type of file exported to your application. If do you use the button, the type is considered. Otherwise, if do you use JS Functions for start the sdk, this type is considered when the fileType is undefined. The field can receive "url" or "Base64"   
-| **downloadType**         | String  | No       | Defines the type of file exported from editor. The attribute accepts: pdf, png, pdf or fullDownloadOnBrowser
+| **downloadType**         | String  | No       | Defines the type of file exported from editor. The attribute accepts: pdf, png, pdf, saveButtonAndFullDownload or fullDownloadOnBrowser
 
 
 ## About "downloadType" attribute
 
 The editor can export mp4 (video), png (image) and pdf from design created.
-- When "pdf" or "mp4" is chosen, the file is exported on browser. 
-- For "png", the file is exported on callbacks, using "url" or "base64" on reponse.
-- For "fullDownloadOnBrowser", the editor enables all formats for download. 
-The "fullDownloadOnBrowser" allows the user to choose "mp4", "pdf" or "png" formart
+- When "pdf" or "mp4" is chosen, the file is exported on browser;
+- For "png", the file is exported on callbacks, using "url" or "base64" on reponse;
+- For "fullDownloadOnBrowser", the editor enables all formats for download;
+- For "saveButtonAndFullDownload", the editor enables all formats for download and show the save button;
 
+
+The "fullDownloadOnBrowser" and "saveButtonAndFullDownload" allows the user to choose "mp4", "pdf" or "png" formart
 The "downloadType" attribute can be used on start of script and JS Functions.
 
-
+<img src="https://cdn-std.droplr.net/files/acc_625204/37AB1a" width="100%"/>
 # 8) Creating or editing a document via Trakto HTML Button®
 
 ### Creating from page format
@@ -263,7 +271,9 @@ The "downloadType" attribute can be used on start of script and JS Functions.
             exportResolution: [...your_export_quality],
             exportFiletype: 'url' | 'base64',
             backgroundImage: '',
-            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser'
+            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser | saveButtonAndFullDownload',
+            saveButtonText: 'Text from save button',
+            saveButtonMessage: 'Message of downloads modal'
     };
 
     window.onload = () => {
@@ -289,7 +299,9 @@ The "downloadType" attribute can be used on start of script and JS Functions.
             exportResolution: [...your_export_quality],
             exportFiletype: 'url' | 'base64',
             backgroundImage: `You can define an url's image here`
-            downloadType: 'png | pdf | mp4'
+            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser | saveButtonAndFullDownload',
+            saveButtonText: 'Text from save button',
+            saveButtonMessage: 'Message of downloads modal'
     };
 
     window.onload = () => {
@@ -317,7 +329,9 @@ The "downloadType" attribute can be used on start of script and JS Functions.
             backgroundImage: `You can define an url's image here`
             width: `You can define a custom width here`,
             height: `You can define a custom height here`,
-            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser'
+            downloadType: 'png | pdf | mp4 | fullDownloadOnBrowser | saveButtonAndFullDownload',
+            saveButtonText: 'Text from save button',
+            saveButtonMessage: 'Message of downloads modal'
     };
 
     window.onload = () => {
