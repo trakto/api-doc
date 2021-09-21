@@ -91,6 +91,7 @@ The image below shows the datailed flow of button operation when integrated into
             TraktoEditor.init({
                 apiSecret: 'Your Api Key',
                 productKey: 'Your Product Key',
+                lang: 'pt-BR | en-US',
                 userEmail: 'user@email.com',
                 customLoaderImageUrl: 'Loader image URL',
                 customLoaderColor: 'Hex Loader color',
@@ -124,6 +125,7 @@ The image below shows the datailed flow of button operation when integrated into
             TraktoEditor.init({
                 apiSecret: 'Your Api Key',
                 productKey: 'Your Product Key',
+                lang: 'pt-BR | en-US',
                 userEmail: 'user@email.com',
                 customLoaderImageUrl: 'Loader image URL',
                 customLoaderColor: 'Hex Loader color',
@@ -187,7 +189,7 @@ The image below shows the datailed flow of button operation when integrated into
 | **standaloneMode**       | String  | No       | Defines whether the user instance is created in the startup sdk. True during startup, FALSE when some resource is used.
 | **defaultFiletype**      | String  | No       | Defines the default type of file exported to your application. If do you use the button, the type is considered. Otherwise, if do you use JS Functions for start the sdk, this type is considered when the fileType is undefined. The field can receive "url" or "Base64"   
 | **downloadType**         | String  | No       | Defines the type of file exported from editor. The attribute accepts: pdf, png, pdf, saveButtonAndFullDownload or fullDownloadOnBrowser
-
+| **lang**                 | Sting   | No       | Define the language of editor. Only pt-BR (Brazilian Portguese) and en-US (English) are supported
 
 ## About "downloadType" attribute
 
